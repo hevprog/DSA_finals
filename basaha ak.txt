@@ -1,0 +1,4 @@
+ig sugad nat para diri masarang.
+
+iyo logic igkada ha logic na folder, tas iyo ttk bootstrap ig kada ha ui na folder.
+
