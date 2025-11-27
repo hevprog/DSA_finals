@@ -1,5 +1,8 @@
 import ttkbootstrap as ttk
 
-class Hanoi_ui:
-    def __init__(self):
-        pass
+class Hanoi_ui(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        ttk.Label(self, text="This is hanoi").pack()
+    
