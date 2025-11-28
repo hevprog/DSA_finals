@@ -64,8 +64,10 @@ class Hanoi_ui(ttk.Frame):
         self.draw_disks()
 
         #Logic
+        self.disk_item = {}
         self.first_highlight = -1
         self.second_highlight = -1
+
         self.canvas.bind("<Button-1>", self.canvas_click)
 
     def canvas_click(self, event):
@@ -90,6 +92,22 @@ class Hanoi_ui(ttk.Frame):
             if is_valid:
                 self.redraw_disks()
 
+                disk_moved = self.H_logic.get_towers()[self.second_highlight][-1]
+                moved_disk_id = self.disk_item[disk_moved]
+
+                source_tower = self.H_logic.get_towers()[self.first_highlight]
+                target_tower = self.H_logic.get_towers()[self.second_highlight]
+
+                source_x = self.tower_positions[self.first_highlight]
+                source_y =self.base_y - (len(source_tower) + 0.2) * self.disk_height 
+
+                target_x  = self.tower_positions[self.second_highlight]
+                lift_y = source_y - 376
+                drop_y = self.base_y - (len(target_tower) - 0.2) * self.disk_height
+
+                self.animate_disks(moved_disk_id, (source_x, source_y), (source_x, lift_y),
+                   on_done=lambda: self.animate_disks(moved_disk_id, (source_x, lift_y), (target_x, drop_y)))
+
             self.first_highlight = -1
             self.second_highlight = -1
         
@@ -105,7 +123,7 @@ class Hanoi_ui(ttk.Frame):
         self.canvas.itemconfig(self.tower_items[tower],fill=color)
 
     def draw_towers(self):
-        
+
         #draw da LONG BROWN towers
         for x in range(self.towers_num):
             i = 100 + x * self.tower_spacing
@@ -131,7 +149,8 @@ class Hanoi_ui(ttk.Frame):
                 y = self.base_y - (disk_indx + 0.2) * self.disk_height
 
                 item = self.canvas.create_rectangle(x - disk_width // 2,y - self.disk_height,x + disk_width // 2,y,fill="yellow", tags="disk")
-                self.disks.append(item)         
+                self.disks.append(item)     
+                self.disk_item[disk_size] = item    
 
     def draw_disks(self):
 
@@ -142,6 +161,30 @@ class Hanoi_ui(ttk.Frame):
             y = self.base_y - (i + 0.2) * self.disk_height
             disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill="yellow", tags="disk")
             self.disks.append(disk)
+
+    def animate_disks(self, disk, from_, to_,steps = 20, delay = 25, on_done=None):
+        x1,y1 = from_
+        x2,y2 = to_
+
+        x_left, y_top, x_right, y_bot = self.canvas.coords(disk)
+        width = x_right - x_left
+
+        dx = (x2 - x1) / steps
+        dy = (y2 - y1) / steps
+
+        
+        def move(i=0):
+            if i <= steps:
+                #move the disk
+                self.canvas.coords(disk, x1 + i * dx - width/2, y1 + i * dy - self.disk_height,x1 + i * dx + width/2,y1 + i * dy)
+                self.after(delay, move, i+1)
+
+            if i > steps and on_done:
+                on_done()
+
+        move()
+
+       
 
     #helper functions para mag back to main
     def get_frame(self):
