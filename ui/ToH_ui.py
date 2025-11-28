@@ -66,7 +66,7 @@ class Hanoi_ui(ttk.Frame):
         self.draw_towers()
         self.draw_disks()
 
-        self.highlight_tower(self.goal_tower, "red")
+        self.highlight_tower(self.goal_tower, "lightcoral")
 
         #Logic
         self.disk_item = {}
@@ -81,7 +81,7 @@ class Hanoi_ui(ttk.Frame):
 
         if self.first_highlight == -1:
             self.first_highlight = tower
-            self.highlight_tower(tower, "orange")
+            self.highlight_tower(tower, "green")
             print(f"first clicked near tower {self.nearest_tower(event.x)}")
         else:
             self.second_highlight = tower
@@ -90,7 +90,12 @@ class Hanoi_ui(ttk.Frame):
             is_valid = self.H_logic.move_disk(self.first_highlight, self.second_highlight)
             print(is_valid)
 
-            self.highlight_tower(self.first_highlight, "brown")
+            #return to correct color
+            if self.first_highlight == self.goal_tower:
+                self.highlight_tower(self.first_highlight, "lightcoral")
+            else:
+                self.highlight_tower(self.first_highlight, "brown")
+            
             print(f"second clicked near tower {self.nearest_tower(event.x)}")
 
             #move the disk kun valid
@@ -157,7 +162,7 @@ class Hanoi_ui(ttk.Frame):
                 x = self.tower_positions[tower_indx]
                 y = self.base_y - (disk_indx + 0.2) * self.disk_height
 
-                item = self.canvas.create_rectangle(x - disk_width // 2,y - self.disk_height,x + disk_width // 2,y,fill="yellow", tags="disk")
+                item = self.canvas.create_rectangle(x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill=self.get_random_color(), tags="disk")
                 self.disks.append(item)     
                 self.disk_item[disk_size] = item    
 
@@ -168,7 +173,7 @@ class Hanoi_ui(ttk.Frame):
             disk_width = self.max_disk_width - i * (self.max_disk_width - self.min_disk_width) // (self.disks_num - 1)
             x = self.tower_positions[0]
             y = self.base_y - (i + 0.2) * self.disk_height
-            disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill="yellow", tags="disk")
+            disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill=self.get_random_color(), tags="disk")
             self.disks.append(disk)
 
     def animate_disks(self, disk, from_, to_,steps = 20, delay = 25, on_done=None):
@@ -198,6 +203,15 @@ class Hanoi_ui(ttk.Frame):
 
         #tower 0 is empty and the goal tower has all disks then player won
         return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
+
+    def get_random_color(self):
+        colors = [
+            'red', 'green', 'blue', 'yellow', 'orange', 'purple', 
+            'pink', 'brown', 'cyan', 'magenta', 'violet',
+            'lightblue', 'lightgreen', 'lightcoral', 'lightsteelblue'
+        ]
+        return random.choice(colors)
+
 
     #helper functions para mag back to main
     def get_frame(self):
