@@ -37,9 +37,9 @@ class Hanoi_ui(ttk.Frame):
         #towers
         self.towers_num = 4
         self.tower_width = 25
-        self.tower_height = 350
+        self.tower_height = 300
         self.tower_spacing = 200
-        self.base_y = 350
+        self.base_y = 360
         self.tower_positions = []
         self.tower_items = []
 
@@ -57,7 +57,7 @@ class Hanoi_ui(ttk.Frame):
             self.disks.clear()
             self.tower_positions.clear()
 
-        self.canvas = ttk.Canvas(self, width=800, height=400)
+        self.canvas = ttk.Canvas(self, width=800, height=500)
         self.canvas.pack(pady=120)
 
         self.draw_towers()
@@ -98,22 +98,23 @@ class Hanoi_ui(ttk.Frame):
                 source_tower = self.H_logic.get_towers()[self.first_highlight]
                 target_tower = self.H_logic.get_towers()[self.second_highlight]
 
+                #x and y coords
                 source_x = self.tower_positions[self.first_highlight]
-                source_y =self.base_y - (len(source_tower) + 0.2) * self.disk_height 
+                source_y =self.base_y - (len(source_tower) + 0.3) * self.disk_height 
 
                 target_x  = self.tower_positions[self.second_highlight]
-                lift_y = source_y - 376
-                drop_y = self.base_y - (len(target_tower) - 0.2) * self.disk_height
+                lift_y = self.base_y - self.tower_height - 10
+                drop_y = self.base_y - (len(target_tower) - 0.7) * self.disk_height
 
-                self.animate_disks(moved_disk_id, (source_x, source_y), (source_x, lift_y),
-                   on_done=lambda: self.animate_disks(moved_disk_id, (source_x, lift_y), (target_x, drop_y)))
+                self.animate_disks(moved_disk_id, (source_x, source_y), (source_x, lift_y), #raise the disk
+                    on_done=lambda:
+                        self.animate_disks(moved_disk_id, (source_x, lift_y), (target_x, lift_y), #slide the disk across
+                    on_done=lambda:               
+                        self.animate_disks(moved_disk_id, (target_x, lift_y), (target_x, drop_y))))#then drop the disk down
 
             self.first_highlight = -1
             self.second_highlight = -1
         
-    def move_disks(self, to_tower):
-        pass
-
     def nearest_tower(self, x):
         centers = self.tower_positions
         return min(range(4), key=lambda i: abs(centers[i] - x))
@@ -179,13 +180,12 @@ class Hanoi_ui(ttk.Frame):
                 self.canvas.coords(disk, x1 + i * dx - width/2, y1 + i * dy - self.disk_height,x1 + i * dx + width/2,y1 + i * dy)
                 self.after(delay, move, i+1)
 
-            if i > steps and on_done:
+            if i > steps and on_done: #para lambda functions
                 on_done()
 
         move()
 
        
-
     #helper functions para mag back to main
     def get_frame(self):
         return self.frame
