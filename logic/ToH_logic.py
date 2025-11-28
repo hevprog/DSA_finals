@@ -31,6 +31,9 @@ class Hanoi_logic:
 
     def get_towers(self):
         return deepcopy(self.towers)
+    
+    def check_win(self):
+        pass
 
 
 if __name__ == "__main__":
