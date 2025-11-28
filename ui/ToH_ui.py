@@ -20,30 +20,45 @@ class Hanoi_ui(ttk.Frame):
         ttk.Label(self, text="The Tower of HANOI").pack(pady=5)
         ttk.Button(self, text="Back", command=self.back_button).place(x=3, y=8)
 
-        self.choose_disks_count()
-
-        self.canvas = ttk.Canvas(self, width=800, height=400)
-        self.canvas.pack(pady=20)
-
-
-    
-
-
-    def choose_disks_count(self):
+        
         ttk.Label(self, text="Select the number of disks", font="Arial").pack()
         spin = ttk.Spinbox(self, from_=3, to=10, textvariable=(self.disks_count))
         spin.pack(pady=10)
 
-        ttk.Button(self, text="Confirm").pack()
+        ttk.Button(self, text="Confirm", command=self.start).pack()
 
-    def draw_disks(self, num):
+
+    
+    def start(self):
+        #towers
+        self.towers_num = 4
+        self.tower_width = 25
+        self.tower_height = 350
+        self.tower_spacing = 200
+        self.base_y = 350
+        self.tower_positions = []
+
         #The disks
-        self.disks_num = 3
+        self.disks_num = self.disks_count.get()
         self.disk_height = 20
         self.max_disk_width = 130
         self.min_disk_width = 70
         self.disks = []
 
+        self.canvas = ttk.Canvas(self, width=800, height=400)
+        self.canvas.pack(pady=20)
+
+        self.draw_towers()
+        self.draw_disks()
+
+    def draw_towers(self):
+        #draw da LONG BROWN towers
+        for x in range(self.towers_num):
+            i = 100 + x * self.tower_spacing
+            self.tower_positions.append(i)
+            self.canvas.create_rectangle(i - self.tower_width // 2, self.base_y - self.tower_height, i + self.tower_width // 2, self.base_y, fill="brown")
+        
+    def draw_disks(self):
         #draw disks
         for i in range(self.disks_num):
             disk_width = self.max_disk_width - i * (self.max_disk_width - self.min_disk_width) // (self.disks_num - 1)
@@ -52,22 +67,7 @@ class Hanoi_ui(ttk.Frame):
             disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill="yellow")
             self.disks.append(disk)
 
-    def draw_towers(self):
-         #towers
-        self.towers_num = 4
-        self.tower_width = 25
-        self.tower_height = 350
-        self.tower_spacing = 200
-        self.base_y = 350
-        self.tower_positions = []
 
-        #draw da LONG BROWN towers
-        for x in range(self.towers_num):
-            i = 100 + x * self.tower_spacing
-            self.tower_positions.append(i)
-            self.canvas.create_rectangle(i - self.tower_width // 2, self.base_y - self.tower_height, i + self.tower_width // 2, self.base_y, fill="brown")
-
-    
     def get_frame(self):
         return self.frame
     
