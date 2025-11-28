@@ -1,5 +1,6 @@
 import sys
 import os
+import random
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
@@ -34,6 +35,8 @@ class Hanoi_ui(ttk.Frame):
         #remove it nakaka ulang
         self.cfg_frame.pack_forget()
 
+        self.goal_tower = random.choice((1,2,3)) #The goal tower
+
         #towers
         self.towers_num = 4
         self.tower_width = 25
@@ -62,6 +65,8 @@ class Hanoi_ui(ttk.Frame):
 
         self.draw_towers()
         self.draw_disks()
+
+        self.highlight_tower(self.goal_tower, "red")
 
         #Logic
         self.disk_item = {}
@@ -111,6 +116,9 @@ class Hanoi_ui(ttk.Frame):
                         self.animate_disks(moved_disk_id, (source_x, lift_y), (target_x, lift_y), #slide the disk across
                     on_done=lambda:               
                         self.animate_disks(moved_disk_id, (target_x, lift_y), (target_x, drop_y))))#then drop the disk down
+
+                if self.is_won():
+                    print("You won!")
 
             self.first_highlight = -1
             self.second_highlight = -1
@@ -185,7 +193,12 @@ class Hanoi_ui(ttk.Frame):
 
         move()
 
-       
+    def is_won(self):
+        towers = self.H_logic.get_towers()
+
+        #tower 0 is empty and the goal tower has all disks then player won
+        return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
+
     #helper functions para mag back to main
     def get_frame(self):
         return self.frame
