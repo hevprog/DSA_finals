@@ -2,6 +2,7 @@ import sys
 import os
 import random
 import time
+import winsound
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
@@ -27,13 +28,23 @@ class Hanoi_ui(ttk.Frame):
         #Bagan Welcome message, tas mawawara pag ma confirm na
         self.cfg_frame = ttk.Frame(self)
         self.cfg_frame.pack()
-        ttk.Label(self.cfg_frame, text="The Tower of HANOI",font="Arial").pack(pady=5)
+        ttk.Label(self.cfg_frame, text="The Tower of Hanoi",font=("Arial", 30, "bold")).pack(pady=10)
         
-        ttk.Label(self.cfg_frame, text="Select the number of disks", font="Arial").pack()
-        spin = ttk.Spinbox(self.cfg_frame, from_=3, to=10, textvariable=(self.disks_count))
+        self.spin_frame = ttk.Frame(self.cfg_frame)
+        self.spin_frame.pack(pady=30)
+
+        ttk.Label(self.spin_frame, text="Select the number of disks", font=("Arial", 15, "bold")).pack()
+        spin = ttk.Spinbox(self.spin_frame, from_=3, to=10, textvariable=(self.disks_count))
         spin.pack(pady=10)
 
-        ttk.Button(self.cfg_frame, text="Confirm", command=self.start).pack()
+        ttk.Button(self.spin_frame, text="Confirm", command=self.start).pack()
+
+        ttk.Label(self.cfg_frame, text="How to Play:", font=("Arial", 20, "bold")).pack(pady=(10, 5))
+        ttk.Label(self.cfg_frame, text="1. Click a tower to select a disk", font=("Arial", 15)).pack(pady=2)
+        ttk.Label(self.cfg_frame, text="2. Click another tower to move it there", font=("Arial", 15)).pack(pady=2)
+        ttk.Label(self.cfg_frame, text="3. Move all disks to the colored (pink) tower", font=("Arial", 15)).pack(pady=2)
+        ttk.Label(self.cfg_frame, text="4. You cannot place a larger disk on a smaller disk", font=("Arial", 15)).pack(pady=2)
+        ttk.Label(self.cfg_frame, text="Good Luck!!", font=("Arial", 35, "bold")).pack(pady=30)
 
     def start(self):
         self.won = False
@@ -88,6 +99,7 @@ class Hanoi_ui(ttk.Frame):
 
         #na handle hit mouse click
         tower = self.nearest_tower(event.x)
+        self.play_beep(190, 100)
 
         if self.first_highlight == -1:
             self.first_highlight = tower
@@ -134,7 +146,8 @@ class Hanoi_ui(ttk.Frame):
                     
                 if self.is_won():
                     self.won = True
-                    
+            else:
+                self.play_beep(1000, 200)
 
             self.first_highlight = -1
             self.second_highlight = -1
@@ -187,7 +200,7 @@ class Hanoi_ui(ttk.Frame):
             disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill=self.get_random_color(), tags="disk")
             self.disks.append(disk)
 
-    def animate_disks(self, disk, from_, to_,steps = 20, delay = 25, on_done=None):
+    def animate_disks(self, disk, from_, to_,steps = 28, delay = 15, on_done=None):
         self.active_animations += 1
 
         x1,y1 = from_
@@ -224,7 +237,6 @@ class Hanoi_ui(ttk.Frame):
         return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
 
     def display_win(self):
-
         self.win_frame = ttk.Frame(self)
         self.win_frame.pack()
 
@@ -236,6 +248,8 @@ class Hanoi_ui(ttk.Frame):
         ttk.Label(self.win_frame, text=f"Time {self.end_timer()}", font="Arial").pack(padx=5, pady=10)
 
         print(f"Time: {self.end_timer()}")
+
+        ttk.Button(self, text="Back", command=self.back_button).pack(padx=10, pady=50)
 
     def start_timer(self):
         self.start_time = time.time()
@@ -250,11 +264,14 @@ class Hanoi_ui(ttk.Frame):
 
     def get_random_color(self):
         colors = [
-            'red', 'green', 'blue', 'yellow', 'orange', 'purple', 
-            'pink', 'brown', 'cyan', 'magenta', 'violet',
-            'lightblue', 'lightgreen', 'lightcoral', 'lightsteelblue'
+            'red', 'blue', 'yellow', 'orange', 'purple', 
+            'pink', 'cyan', 'magenta', 'violet',
+            'lightblue', 'lightgreen',  'lightsteelblue'
         ]
         return random.choice(colors)
+
+    def play_beep(self,frequency=1000, duration=500):
+        winsound.Beep(frequency, duration)
 
     #helper functions para mag back to main
     def get_frame(self):
