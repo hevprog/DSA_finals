@@ -56,7 +56,6 @@ class Hanoi_ui(ttk.Frame):
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
-
         self.parent.current_shown_frame = main_menu
 
 if __name__ == "__main__": #pag test or ig run it UI mismo
