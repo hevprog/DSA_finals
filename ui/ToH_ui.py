@@ -1,11 +1,14 @@
 import ttkbootstrap as ttk
 
 class Hanoi_ui(ttk.Frame):
+
     def __init__(self, parent):
 
         super().__init__(parent)
+        self.parent = parent
 
         ttk.Label(self, text="The Tower of HANOI").pack(pady=40)
+        ttk.Button(self, text="Back", command=self.back_button).place(x=3, y=8)
 
         self.canvas = ttk.Canvas(self, width=800, height=400)
         self.canvas.pack(pady=20)
@@ -39,6 +42,22 @@ class Hanoi_ui(ttk.Frame):
             disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill="yellow")
             self.disks.append(disk)
     
+    def get_frame(self):
+        return self.frame
+    
+    def unshow(self,frame:ttk.Frame):
+        frame.forget()
+
+    def show(self, frame:ttk.Frame):
+        frame.pack()
+        frame.tkraise()
+
+    def back_button(self):
+        self.parent.unshow(self)
+        main_menu = self.parent.get_frame()
+        self.parent.show(main_menu)
+
+        self.parent.current_shown_frame = main_menu
 
 if __name__ == "__main__": #pag test or ig run it UI mismo
     root = ttk.Window(themename="superhero")
