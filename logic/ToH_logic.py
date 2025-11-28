@@ -22,7 +22,7 @@ class Hanoi_logic:
         
         disks = self.towers[from_tower][-1]
         #check invalid move
-        if self.towers[to_tower] and self.towers[to_tower][-1] < disks:
+        if self.towers[to_tower] and self.towers[to_tower][-1] > disks:
             return False 
 
         self.towers[from_tower].pop()
