@@ -10,12 +10,12 @@
 <hr>
 
 ## Checklist:
-- [] Main UI
-- [] Tower of Hanoi
-- [] Binary Search
-- [] Counting Sort
-- [] Insertion Sort
-- [] Stacks
+- [ ] Main UI
+- [ ] Tower of Hanoi
+- [ ] Binary Search
+- [ ] Counting Sort
+- [ ] Insertion Sort
+- [ ] Stacks
 
 ## Notes
 It aton mga class UI butngan nat hin (ttk.Frame), Example:

@@ -6,6 +6,7 @@ from ui.ToH_ui import Hanoi_ui
 #get_frame()**returns a frame of the inherited class
 class frame_ops: 
     frame:ttk.Frame
+
     def get_frame(self):
         return self.frame
     def unshow(self,frame:ttk.Frame):
@@ -21,6 +22,7 @@ class Main_window(ttk.Window,frame_ops):
         self.geometry("800x600") # or mas duro dako pa like 1000x650 or 1200×700?
         self.resizable(False, False)
         self.frame = ttk.Frame(master=self)
+        self.current_frame = self.get_frame() #get the current active frame
 
     def widgets(self):
         self.label1 = ttk.Label(self.frame, text="Main menu")
@@ -56,6 +58,9 @@ def switchHanoi(): #change the window to Hanoi UI
     hanoi = Hanoi_ui(window)
     window.show(hanoi)
     window.unshow(window.get_frame())
+    window.current_frame = hanoi
+
+
 def switchBinary(): #change tp Binary UI
     pass
 def switchCounting(): #change to counting UI
