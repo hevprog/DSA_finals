@@ -25,4 +25,4 @@ It aton mga class UI butngan nat hin (ttk.Frame), Example:
     def __init__(self, parent):
     ...
 ```
-In your class ensure to provide a function that returns the "back" button ex. def back_button() -> returns ttk.button
+In your class ensure to provide a function that returns the "back" button ex. def back_button()
