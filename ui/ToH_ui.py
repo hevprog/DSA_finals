@@ -1,6 +1,7 @@
 import sys
 import os
 import random
+import time
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
@@ -17,6 +18,10 @@ class Hanoi_ui(ttk.Frame):
         self.parent = parent
         self.disks_count = ttk.IntVar(value=3)
 
+        #track animation
+        self.active_animations = 0
+        self.won = False
+
         ttk.Button(self, text="Back", command=self.back_button).place(x=3, y=8)
 
         #Bagan Welcome message, tas mawawara pag ma confirm na
@@ -29,14 +34,16 @@ class Hanoi_ui(ttk.Frame):
         spin.pack(pady=10)
 
         ttk.Button(self.cfg_frame, text="Confirm", command=self.start).pack()
-    
+
     def start(self):
+        self.won = False
+        self.active_animations = 0
 
         #remove it nakaka ulang
         self.cfg_frame.pack_forget()
+        self.start_timer()
 
         self.goal_tower = random.choice((1,2,3)) #The goal tower
-
         #towers
         self.towers_num = 4
         self.tower_width = 25
@@ -76,6 +83,9 @@ class Hanoi_ui(ttk.Frame):
         self.canvas.bind("<Button-1>", self.canvas_click)
 
     def canvas_click(self, event):
+        if self.active_animations > 0:
+            return
+
         #na handle hit mouse click
         tower = self.nearest_tower(event.x)
 
@@ -121,13 +131,14 @@ class Hanoi_ui(ttk.Frame):
                         self.animate_disks(moved_disk_id, (source_x, lift_y), (target_x, lift_y), #slide the disk across
                     on_done=lambda:               
                         self.animate_disks(moved_disk_id, (target_x, lift_y), (target_x, drop_y))))#then drop the disk down
-
+                    
                 if self.is_won():
-                    print("You won!")
+                    self.won = True
+                    
 
             self.first_highlight = -1
             self.second_highlight = -1
-        
+            
     def nearest_tower(self, x):
         centers = self.tower_positions
         return min(range(4), key=lambda i: abs(centers[i] - x))
@@ -164,7 +175,7 @@ class Hanoi_ui(ttk.Frame):
 
                 item = self.canvas.create_rectangle(x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill=self.get_random_color(), tags="disk")
                 self.disks.append(item)     
-                self.disk_item[disk_size] = item    
+                self.disk_item[disk_size] = item   
 
     def draw_disks(self):
 
@@ -177,6 +188,8 @@ class Hanoi_ui(ttk.Frame):
             self.disks.append(disk)
 
     def animate_disks(self, disk, from_, to_,steps = 20, delay = 25, on_done=None):
+        self.active_animations += 1
+
         x1,y1 = from_
         x2,y2 = to_
 
@@ -192,17 +205,48 @@ class Hanoi_ui(ttk.Frame):
                 #move the disk
                 self.canvas.coords(disk, x1 + i * dx - width/2, y1 + i * dy - self.disk_height,x1 + i * dx + width/2,y1 + i * dy)
                 self.after(delay, move, i+1)
+            
+            else:
+                self.active_animations -= 1
 
-            if i > steps and on_done: #para lambda functions
-                on_done()
+                if i > steps and on_done: #para lambda functions
+                    on_done()
+
+                elif self.won and self.active_animations == 0:
+                    self.after(300, self.display_win)
 
         move()
-
+    
     def is_won(self):
         towers = self.H_logic.get_towers()
 
         #tower 0 is empty and the goal tower has all disks then player won
         return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
+
+    def display_win(self):
+
+        self.win_frame = ttk.Frame(self)
+        self.win_frame.pack()
+
+        self.canvas.destroy()
+        self.disks.clear()
+        self.tower_positions.clear()
+
+        ttk.Label(self.win_frame, text="Congratulations!!!", font="Arial").pack(padx=5, pady=10)
+        ttk.Label(self.win_frame, text=f"Time {self.end_timer()}", font="Arial").pack(padx=5, pady=10)
+
+        print(f"Time: {self.end_timer()}")
+
+    def start_timer(self):
+        self.start_time = time.time()
+
+    def end_timer(self):
+        if self.start_time:
+            elapsed = time.time() - self.start_time
+            minutes = int(elapsed // 60)
+            seconds = int(elapsed % 60)
+            return f"{minutes:02d}:{seconds:02d}"
+        return "00:00"
 
     def get_random_color(self):
         colors = [
@@ -211,7 +255,6 @@ class Hanoi_ui(ttk.Frame):
             'lightblue', 'lightgreen', 'lightcoral', 'lightsteelblue'
         ]
         return random.choice(colors)
-
 
     #helper functions para mag back to main
     def get_frame(self):
