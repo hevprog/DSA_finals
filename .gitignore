@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
-__init__.py
+
+ui/__init__.py
+logic/__init__.py
