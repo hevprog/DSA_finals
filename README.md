@@ -4,6 +4,8 @@
 - Henry V Singzon
 - Kent Andrew Parejas
 - Michael Andre Pacheco
+- Nico Timothy Babaylan
+- John Reymark Binghoy
 
 <hr>
 
