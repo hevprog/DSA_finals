@@ -28,12 +28,12 @@ class Hanoi_ui(ttk.Frame):
         spin.pack(pady=10)
 
         ttk.Button(self.cfg_frame, text="Confirm", command=self.start).pack()
-
-
     
     def start(self):
 
+        #remove it nakaka ulang
         self.cfg_frame.pack_forget()
+
         #towers
         self.towers_num = 4
         self.tower_width = 25
@@ -79,9 +79,17 @@ class Hanoi_ui(ttk.Frame):
         else:
             self.second_highlight = tower
 
+            #call the logic
+            is_valid = self.H_logic.move_disk(self.first_highlight, self.second_highlight)
+            print(is_valid)
+
             self.highlight_tower(self.first_highlight, "brown")
             print(f"second clicked near tower {self.nearest_tower(event.x)}")
-    
+
+            #move the disk kun valid
+            if is_valid:
+                self.redraw_disks()
+
             self.first_highlight = -1
             self.second_highlight = -1
         
@@ -97,6 +105,7 @@ class Hanoi_ui(ttk.Frame):
         self.canvas.itemconfig(self.tower_items[tower],fill=color)
 
     def draw_towers(self):
+        
         #draw da LONG BROWN towers
         for x in range(self.towers_num):
             i = 100 + x * self.tower_spacing
@@ -104,16 +113,37 @@ class Hanoi_ui(ttk.Frame):
             item = self.canvas.create_rectangle(i - self.tower_width // 2, self.base_y - self.tower_height, i + self.tower_width // 2, self.base_y, fill="brown")
             self.tower_items.append(item)
 
+    def redraw_disks(self):
+
+        #ig 'remove' it mga disks
+        self.canvas.delete("disk")
+        self.disks.clear()
+
+        towers = self.H_logic.get_towers()
+
+        #iterrate ngan redraw
+        for tower_indx, tower in enumerate(towers):
+
+            for disk_indx, disk_size in enumerate(tower):
+
+                disk_width = self.max_disk_width - (disk_size-1) * (self.max_disk_width - self.min_disk_width) // (self.disks_num - 1)
+                x = self.tower_positions[tower_indx]
+                y = self.base_y - (disk_indx + 0.2) * self.disk_height
+
+                item = self.canvas.create_rectangle(x - disk_width // 2,y - self.disk_height,x + disk_width // 2,y,fill="yellow", tags="disk")
+                self.disks.append(item)         
+
     def draw_disks(self):
+
         #draw disks
         for i in range(self.disks_num):
             disk_width = self.max_disk_width - i * (self.max_disk_width - self.min_disk_width) // (self.disks_num - 1)
             x = self.tower_positions[0]
             y = self.base_y - (i + 0.2) * self.disk_height
-            disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill="yellow")
+            disk = self.canvas.create_rectangle( x - disk_width // 2, y - self.disk_height, x + disk_width // 2, y, fill="yellow", tags="disk")
             self.disks.append(disk)
 
-
+    #helper functions para mag back to main
     def get_frame(self):
         return self.frame
     
