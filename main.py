@@ -113,6 +113,7 @@ if __name__ == "__main__":
     window.is_clicked_ToH().configure(command=switchHanoi)
     window.is_clicked_Count().configure(command=switchCounting)
     window.is_clicked_Insert().configure(command=switchInsert)
+    window.is_clicked_Binary().configure(command=switchBinary)
     window.is_clicked_quit().configure(command=window.quit)
     window.mainloop()
 
