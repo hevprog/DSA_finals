@@ -15,13 +15,13 @@ class Counting_ui(ttk.Frame):
         self.label1 = ttk.Label(self)
         self.label1.pack(pady=5,side="bottom")
         ttk.Button(self,text="Randomize", command=self.randomize_val).pack(side="bottom",pady= 20)
-        self.canvas = ttk.Canvas(self, width= 750,height= 500)
+        self.canvas = ttk.Canvas(self, width= 1000,height= 500) # ig 1000 nala em width para ma fix
         self.canvas.pack(pady=5)
 
 
         self.coin_values = [1,1,5,2,4,4,6,7,3,3]
         self.coin_items = []
-        x_start = 50
+        x_start = 150
         y_pos = 100
         coin_size = 50
         gap = 20
@@ -58,7 +58,7 @@ class Counting_ui(ttk.Frame):
         self.parent.current_shown_frame = main_menu
     def redraw(self):
         self.coin_items = []
-        x_start = 50
+        x_start = 150
         y_pos = 100
         coin_size = 50
         gap = 20
