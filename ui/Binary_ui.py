@@ -1,6 +1,6 @@
 import ttkbootstrap as ttk
 
-class Hanoi_ui(ttk.Frame):
+class binary_ui(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 

@@ -1,7 +1,7 @@
 import ttkbootstrap as ttk
 from ui.ToH_ui import Hanoi_ui
 from ui.Counting_ui import Counting_ui
-
+from ui.Binary_ui import binary_ui
 #basic operations with the frame
 #get_frame()**returns a frame of the inherited class
 class frame_ops: 
@@ -48,7 +48,7 @@ class Main_window(ttk.Window,frame_ops):
     def is_clicked_Stacks(self):
         pass
     def is_clicked_Binary(self):
-        pass
+        return self.button5
     def is_clicked_quit(self):
         return self.button6
     
@@ -60,7 +60,10 @@ def switchHanoi(): #change the window to Hanoi UI
     window.unshow(window.get_frame())
     window.current_frame = hanoi
 def switchBinary(): #change tp Binary UI
-    pass
+    Binary = binary_ui(window)
+    window.show(Binary)
+    window.unshow(window.get_frame())
+    window.current_frame = Binary
 def switchCounting(): #change to counting UI
     Counting= Counting_ui(window)
     window.show(Counting)
@@ -77,5 +80,6 @@ if __name__ == "__main__":
     window.widgets()
     window.is_clicked_ToH().configure(command=switchHanoi)
     window.is_clicked_Count().configure(command=switchCounting)
+    window.is_clicked_Binary().configure(command=switchBinary)
     window.is_clicked_quit().configure(command=window.quit)
     window.mainloop()
