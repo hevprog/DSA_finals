@@ -285,8 +285,6 @@ class Hanoi_ui(ttk.Frame):
         frame.tkraise()
 
     def back_button(self):
-        Main = self.parent
-        Main.widget()
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
