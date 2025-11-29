@@ -89,7 +89,10 @@ def switchHanoi(): #change the window to Hanoi UI
 
 
 def switchBinary(): #change to Binary UI
-    pass
+    bin = binary_ui(window)
+    window.show(bin)
+    window.unshow(window.get_frame())
+    window.current_frame = bin
 
 def switchCounting(): #change to counting UI
     Counting= Counting_ui(window)
@@ -109,6 +112,7 @@ if __name__ == "__main__":
     window = Main_window()
     window.is_clicked_ToH().configure(command=switchHanoi)
     window.is_clicked_Count().configure(command=switchCounting)
+    window.is_clicked_Binary().configure(command=switchBinary)
     window.is_clicked_quit().configure(command=window.quit)
     window.mainloop()
 
