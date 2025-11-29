@@ -7,9 +7,9 @@ class insertion:
     
     def sort(self):
         self.sorted = True
-        key = 0, n = 10
+        n = 10
 
-        for i in range(len(n)):
+        for i in range(len(self.arr)):
             key = self.arr[i]
             j = i - 1
             while j >= 0 and self.arr[j] > key:
