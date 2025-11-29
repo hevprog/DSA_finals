@@ -25,7 +25,7 @@ class Main_window(ttk.Window,frame_ops):
         self.resizable(False, False)
         self.frame = ttk.Frame(master=self)
         self.current_frame = self.get_frame() #get the current active frame
-
+        self.frame.pack()
         self.custom_style = ttk.Style()
         self.custom_style.configure('primary.TButton', font=('Arial', 15))
 
@@ -42,14 +42,13 @@ class Main_window(ttk.Window,frame_ops):
         self.button5 = ttk.Button(self, text="Binary search", bootstyle="primary", width=25)
         self.button6 = ttk.Button(self, text="Quit", bootstyle="outline button", width=25)
         self.label1.pack(pady=20)
-        pad= 5
+
         self.button1.place(x=80, y=150)
         self.button2.place(x=600, y=150)
         self.button3.place(x=80, y=300)
         self.button4.place(x=600, y=300)
         self.button5.place(x=80, y=450)
         self.button6.place(x=600, y=450)
-        self.frame.pack()
 
     def unshow_widgets(self):
         self.label1.destroy()
@@ -82,10 +81,10 @@ class Main_window(ttk.Window,frame_ops):
 
 #change window scenes
 def switchHanoi(): #change the window to Hanoi UI
-
     hanoi = Hanoi_ui(window)
     window.unshow(window.get_frame())
     window.show(hanoi)
+    window.unshow_widgets()
     window.current_frame = hanoi
     window.unshow_widgets()
 
