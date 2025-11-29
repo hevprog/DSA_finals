@@ -285,15 +285,18 @@ class Hanoi_ui(ttk.Frame):
         frame.tkraise()
 
     def back_button(self):
+        Main = self.parent
+        Main.widget()
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
         self.parent.current_shown_frame = main_menu
+        return
 
 if __name__ == "__main__": #pag test or ig run it UI mismo
     root = ttk.Window(themename="superhero")
     root.title("Hanoi UI")
-    root.geometry("800x600")
+    root.geometry("1000x600")
     root.resizable(False, False)
 
     test_window = Hanoi_ui(root)
