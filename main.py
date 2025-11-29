@@ -28,7 +28,6 @@ class Main_window(ttk.Window,frame_ops):
         self.frame.pack()
         self.custom_style = ttk.Style()
         self.custom_style.configure('primary.TButton', font=('Arial', 15))
-
         self.widgets()
 
 
@@ -84,9 +83,8 @@ def switchHanoi(): #change the window to Hanoi UI
     hanoi = Hanoi_ui(window)
     window.unshow(window.get_frame())
     window.show(hanoi)
-    window.unshow_widgets()
+    # window.unshow_widgets() # bug
     window.current_frame = hanoi
-    window.unshow_widgets()
 
 def switchBinary(): #change to Binary UI
     pass

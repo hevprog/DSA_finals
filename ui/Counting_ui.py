@@ -9,13 +9,14 @@ class Counting_ui(ttk.Frame):
         self.col = 'black'
         self.parent = parent
         ttk.Label(self, text="This is counting sort").pack(pady= 10)
+        ttk.Label(self, text="                                                              ").pack(pady= 10)
         ttk.Button(self,text="back to menu",command=self.back_button).pack()
         ttk.Button(self,text="Sort", command=self.sorting).pack(side="bottom",pady=10)
         ttk.Label(self,text="A counting sort is a sorting algorithm. The basic idea behind Counting Sort is to count the frequency \nof each distinct element and use that information to place the elements in a sorted way").pack(side="bottom")
         self.label1 = ttk.Label(self)
         self.label1.pack(pady=5,side="bottom")
         ttk.Button(self,text="Randomize", command=self.randomize_val).pack(side="bottom",pady= 20)
-        self.canvas = ttk.Canvas(self, width= 750,height= 500)
+        self.canvas = ttk.Canvas(self, width= 800,height= 500)
         self.canvas.pack(pady=5)
 
 
