@@ -1,6 +1,8 @@
 import ttkbootstrap as ttk
 from ui.ToH_ui import Hanoi_ui
+from ui.Insertion_ui import InsertionUi 
 from ui.Counting_ui import Counting_ui
+from ui.Binary_ui import binary_ui
 
 #basic operations with the frame
 #get_frame()**returns a frame of the inherited class
@@ -66,8 +68,7 @@ class Main_window(ttk.Window,frame_ops):
         return self.button2
     
     def is_clicked_Insert(self):
-        pass
-
+        return self.button3
     def is_clicked_Stacks(self):
         pass
 
@@ -97,8 +98,10 @@ def switchCounting(): #change to counting UI
     window.current_frame=Counting
 
 def switchInsert(): #change to Insert UI
-    pass
-
+    insertion = InsertionUi(window)
+    window.show(insertion)
+    window.unshow(window.get_frame())
+    window.current_frame= InsertionUi
 def switchStacks(): #change to Stacks UI
     pass
 
