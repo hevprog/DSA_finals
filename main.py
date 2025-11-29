@@ -1,6 +1,8 @@
 import ttkbootstrap as ttk
 from ui.ToH_ui import Hanoi_ui
+from ui.Insertion_ui import InsertionUi 
 from ui.Counting_ui import Counting_ui
+from ui.Binary_ui import binary_ui
 
 #basic operations with the frame
 #get_frame()**returns a frame of the inherited class
