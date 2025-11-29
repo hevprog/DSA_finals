@@ -23,7 +23,7 @@ class Hanoi_ui(ttk.Frame):
         self.active_animations = 0
         self.won = False
 
-        ttk.Button(self, text="Back", command=self.back_button).place(x=3, y=8)
+        ttk.Button(self, text="⬅", command=self.back_button).place(x=3, y=8)
 
         #Bagan Welcome message, tas mawawara pag ma confirm na
         self.cfg_frame = ttk.Frame(self)
@@ -45,6 +45,8 @@ class Hanoi_ui(ttk.Frame):
         ttk.Label(self.cfg_frame, text="3. Move all disks to the colored (pink) tower", font=("Arial", 15)).pack(pady=2)
         ttk.Label(self.cfg_frame, text="4. You cannot place a larger disk on a smaller disk", font=("Arial", 15)).pack(pady=2)
         ttk.Label(self.cfg_frame, text="Good Luck!!", font=("Arial", 35, "bold")).pack(pady=30)
+        ttk.Label(self.cfg_frame, text="                                                                                         ", font=("Arial", 35, "bold")).pack(pady=30)
+
 
     def start(self):
         self.won = False
@@ -237,7 +239,7 @@ class Hanoi_ui(ttk.Frame):
         return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
 
     def display_win(self):
-        self.win_frame = ttk.Frame(self)
+        self.win_frame = ttk.Frame(self, width=1000)
         self.win_frame.pack()
 
         self.canvas.destroy()
@@ -246,6 +248,7 @@ class Hanoi_ui(ttk.Frame):
 
         ttk.Label(self.win_frame, text="Congratulations!!!", font="Arial").pack(padx=5, pady=10)
         ttk.Label(self.win_frame, text=f"Time {self.end_timer()}", font="Arial").pack(padx=5, pady=10)
+        
 
         print(f"Time: {self.end_timer()}")
 
@@ -289,7 +292,7 @@ class Hanoi_ui(ttk.Frame):
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
         self.parent.current_shown_frame = main_menu
-        super(self.parent.widgets())
+        # super(self.parent.widgets()) #BUGG
 
 if __name__ == "__main__": #pag test or ig run it UI mismo
     root = ttk.Window(themename="superhero")

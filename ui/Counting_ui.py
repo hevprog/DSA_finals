@@ -15,7 +15,7 @@ class Counting_ui(ttk.Frame):
         self.label1 = ttk.Label(self)
         self.label1.pack(pady=5,side="bottom")
         ttk.Button(self,text="Randomize", command=self.randomize_val).pack(side="bottom",pady= 20)
-        self.canvas = ttk.Canvas(self, width= 750,height= 500)
+        self.canvas = ttk.Canvas(self, width= 800,height= 500) # ig 1000 nala em width para ma fix
         self.canvas.pack(pady=5)
 
 
