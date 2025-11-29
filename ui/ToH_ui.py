@@ -239,7 +239,7 @@ class Hanoi_ui(ttk.Frame):
         return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
 
     def display_win(self):
-        self.win_frame = ttk.Frame(self)
+        self.win_frame = ttk.Frame(self, width=1000)
         self.win_frame.pack()
 
         self.canvas.destroy()
@@ -248,6 +248,7 @@ class Hanoi_ui(ttk.Frame):
 
         ttk.Label(self.win_frame, text="Congratulations!!!", font="Arial").pack(padx=5, pady=10)
         ttk.Label(self.win_frame, text=f"Time {self.end_timer()}", font="Arial").pack(padx=5, pady=10)
+        
 
         print(f"Time: {self.end_timer()}")
 
