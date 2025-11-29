@@ -11,9 +11,9 @@
 
 ## Checklist:
 - [ ] Main UI
-- [/] Tower of Hanoi
+- [ x ] Tower of Hanoi
 - [ ] Binary Search
-- [/] Counting Sort
+- [ x ] Counting Sort
 - [ ] Insertion Sort
 - [ ] Stacks
 
