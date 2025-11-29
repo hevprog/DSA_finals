@@ -34,7 +34,7 @@ class InsertionUi(ttk.Frame):
             y2 = y_pos + coin_size
 
             # for every coin value divisible by 2
-            self.canvas.create_oval(x1, y1, x2, y2, fill="gold" if value % 2 == 0 else "Darkgoldenrod3", width=2)
+            self.canvas.create_oval(x1, y1, x2, y2, fill="pink" if value % 2 == 0 else "lightgreen", width=2)
             center_x = (x1 + x2) / 2
             center_y = (y1 + y2) / 2
             self.canvas.create_text(center_x, center_y, text = str(value), font=("Helvetica", 16, "bold"))
@@ -73,7 +73,7 @@ class InsertionUi(ttk.Frame):
             x2 = x1 + coin_size
             y2 = y_pos + coin_size
 
-            self.canvas.create_oval(x1, y1, x2, y2, fill="gold" if value % 2 == 0 else "Darkgoldenrod3", width=2, outline=self.col)
+            self.canvas.create_oval(x1, y1, x2, y2, fill="pink" if value % 2 == 0 else "lightgreen", width=2, outline=self.col)
             center_x = (x1 + x2) / 2
             center_y = (y1 + y2) / 2
             self.canvas.create_text(center_x, center_y, text=str(value), font=("Helvetica", 16, "bold"))
