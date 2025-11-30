@@ -3,6 +3,7 @@ import os
 import random
 import time
 import winsound
+import threading
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
@@ -239,20 +240,19 @@ class Hanoi_ui(ttk.Frame):
         return not towers[0] and len(towers[self.goal_tower]) == self.disks_num
 
     def display_win(self):
-        self.win_frame = ttk.Frame(self, width=1000)
-        self.win_frame.pack()
+        self.win_frame = ttk.Frame(self)
 
         self.canvas.destroy()
         self.disks.clear()
         self.tower_positions.clear()
 
-        ttk.Label(self.win_frame, text="Congratulations!!!", font="Arial").pack(padx=5, pady=10)
-        ttk.Label(self.win_frame, text=f"Time {self.end_timer()}", font="Arial").pack(padx=5, pady=10)
-        
+        ttk.Label(self.win_frame, text="Congratulations!!!", font=("Arial", 25, "bold")).pack(padx=5, pady=20)
+        ttk.Label(self.win_frame, text=f"Time {self.end_timer()}", font=("Arial", 30)).pack(padx=5, pady=30)
 
-        print(f"Time: {self.end_timer()}")
-
-        ttk.Button(self, text="Back", command=self.back_button).pack(padx=10, pady=50)
+        ttk.Button(self.win_frame, text="Back to Menu", bootstyle="primary", command=self.back_button, width=40).pack(padx=10, pady=50)
+        ttk.Label(self.win_frame, text="                                             `",font=("Arial", 50)).pack(padx=10, pady=200)
+        self.win_frame.pack()
+        self.play_win_music()
 
     def start_timer(self):
         self.start_time = time.time()
@@ -275,6 +275,23 @@ class Hanoi_ui(ttk.Frame):
 
     def play_beep(self,frequency=1000, duration=500):
         winsound.Beep(frequency, duration)
+
+    def play_win_music(self):
+
+        def play_music():
+            melody = [(520, 300), (660, 300), (790, 300), (1040, 800), (0, 200), (1040, 300), (1175, 600), (0, 200), (1175, 300), (1320, 300), (1400, 300), (1570, 600)]
+
+            for frequency, duration in melody:
+
+                if frequency > 0:
+                    winsound.Beep(frequency, duration)
+                else:
+                    time.sleep(duration / 800)
+        
+        #ma himo ka hin another thread para ig run it music -> diri ma freeze it program
+        music_thread = threading.Thread(target=play_music)
+        music_thread.daemon = True 
+        music_thread.start()
 
     #helper functions para mag back to main
     def get_frame(self):
