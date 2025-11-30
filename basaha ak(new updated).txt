@@ -1,0 +1,20 @@
+ig sugad nat para diri masarang.
+
+iyo logic igkada ha logic na folder, tas iyo ttk bootstrap ig kada ha ui na folder.
+
+{
+    .gitignore, ignore mga __pycache__ kay masarang
+}
+
+***Note bago mag push***
+---Bago kamo mag push an iyo branch, ig update an iyo local ha tat remote main.
+
+para an mga changes it remote main ma in sync na ha iyo local.
+A good practice para diri ma wara an iyo work is pag himo kamo separate na branch tas merge
+(this will create a branch with ur changes in ur local repo)
+git checkout -b <branch_name> or git branch <branch_name> (if git branch, ned pa to git switch)
+git fetch origin
+git merge origin/main
+
+(para ha mga matindi 🔥 fck it we ball)
+git pull origin main
