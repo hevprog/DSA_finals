@@ -1,4 +1,4 @@
-## Final Project: An Interactive Simulator for Data Structures and Algorithms Implementation in Python utilizing the ttkbootstrap library for the user interface.
+## Final Project: An Interactive Simulator for Data Structures and Algorithms.
 
 ## Contributors:
 - Henry V Singzon

@@ -31,7 +31,6 @@ class Main_window(ttk.Window,frame_ops):
 
         self.widgets()
 
-
     def widgets(self):
         self.label1 = ttk.Label(self.frame, text="Data Structures and Algorithms Simulator", font=("Arial", 31, "bold"))
 
@@ -40,7 +39,7 @@ class Main_window(ttk.Window,frame_ops):
         self.button3 = ttk.Button(self, text="Insertion sort", bootstyle="primary", width=25)
         self.button4 = ttk.Button(self, text="Stacks", bootstyle="primary", width=25)
         self.button5 = ttk.Button(self, text="Binary search", bootstyle="primary", width=25)
-        self.button6 = ttk.Button(self, text="Quit", bootstyle="outline button", width=25)
+        self.button6 = ttk.Button(self, text="Quit", bootstyle="danger", width=45)
         self.label1.pack(pady=20)
 
         self.button1.place(x=80, y=150)
@@ -49,15 +48,6 @@ class Main_window(ttk.Window,frame_ops):
         self.button4.place(x=600, y=300)
         self.button5.place(x=80, y=450)
         self.button6.place(x=600, y=450)
-
-    def unshow_widgets(self):
-        self.label1.destroy()
-        self.button1.destroy()
-        self.button2.destroy()
-        self.button3.destroy()
-        self.button4.destroy()
-        self.button5.destroy()
-        self.button6.destroy()
     
     #accessors to the clickable widgets
     def is_clicked_ToH(self):
@@ -77,8 +67,6 @@ class Main_window(ttk.Window,frame_ops):
     def is_clicked_quit(self):
         return self.button6
 
-    
-
 #change window scenes
 def switchHanoi(): #change the window to Hanoi UI
     hanoi = Hanoi_ui(window)
@@ -87,12 +75,11 @@ def switchHanoi(): #change the window to Hanoi UI
     # window.unshow_widgets() # bug
     window.current_frame = hanoi
 
-
 def switchBinary(): #change to Binary UI
-    bin = binary_ui(window)
-    window.show(bin)
+    binary = binary_ui(window) # bin keyword is a function
+    window.show(binary)
     window.unshow(window.get_frame())
-    window.current_frame = bin
+    window.current_frame = binary
 
 def switchCounting(): #change to counting UI
     Counting= Counting_ui(window)
@@ -107,6 +94,7 @@ def switchInsert(): #change to Insert UI
     window.current_frame= InsertionUi
 def switchStacks(): #change to Stacks UI
     pass
+
 
 if __name__ == "__main__":
     window = Main_window()
