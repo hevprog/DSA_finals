@@ -3,6 +3,7 @@ import os
 import random
 import time
 import winsound
+import threading
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
@@ -276,14 +277,21 @@ class Hanoi_ui(ttk.Frame):
         winsound.Beep(frequency, duration)
 
     def play_win_music(self):
-        melody = [(520, 400), (660, 400), (790, 400), (1040, 800), (0, 200), (1040, 400), (1175, 800), (0, 200), (1175, 400), (1320, 400), (1400, 400), (1570, 1200)]
-    
-        for frequency, duration in melody:
-            if frequency > 0:
-                winsound.Beep(frequency, duration)
-            else:
-                time.sleep(duration / 1000)
 
+        def play_music():
+            melody = [(520, 300), (660, 300), (790, 300), (1040, 800), (0, 200), (1040, 300), (1175, 600), (0, 200), (1175, 300), (1320, 300), (1400, 300), (1570, 600)]
+
+            for frequency, duration in melody:
+
+                if frequency > 0:
+                    winsound.Beep(frequency, duration)
+                else:
+                    time.sleep(duration / 800)
+        
+        #ma himo ka hin another thread para ig run it music -> diri ma freeze it program
+        music_thread = threading.Thread(target=play_music)
+        music_thread.daemon = True 
+        music_thread.start()
 
     #helper functions para mag back to main
     def get_frame(self):
