@@ -1,7 +1,7 @@
 from ttkbootstrap.style import ThemeDefinition
 
-theme = ThemeDefinition(
-    name="cstmtheme1",
+theme1_light = ThemeDefinition(
+    name="theme1_light",
     themetype="light",
     colors={
         "primary": "#452829",
@@ -23,8 +23,31 @@ theme = ThemeDefinition(
     },
 )
 
-theme2 = ThemeDefinition(
-    name="cstmtheme2",
+theme1_dark = ThemeDefinition(
+    name="theme1_dark",
+    themetype="dark",
+    colors={
+        "primary": "#8f5e60",
+        "secondary": "#5c3a3c",
+        "success": "#6e8f73",
+        "info": "#5f7d8a",
+        "warning": "#b59b5c",
+        "danger": "#bf6b6b",
+        "light": "#2a1a1b",
+        "dark": "#f8f3f0",
+        "bg": "#1f1516",
+        "fg": "#e8d1c5",
+        "selectbg": "#8f5e60",
+        "selectfg": "#ffffff",
+        "border": "#452829",
+        "inputfg": "#e8d1c5",
+        "inputbg": "#2a1a1b",
+        "active": "#7a4e50",
+    },
+)
+
+theme2_light = ThemeDefinition(
+    name="theme2_light",
     themetype="light",
     colors={
         "primary": "#1b3c53",
@@ -43,5 +66,166 @@ theme2 = ThemeDefinition(
         "inputfg": "#343a40",
         "inputbg": "#fff",
         "active": "#e5e5e5",
+    },
+)
+
+theme2_dark = ThemeDefinition(
+    name="theme2_dark",
+    themetype="dark",
+    colors={
+        "primary": "#5a7a94",
+        "secondary": "#3a4e5e",
+        "success": "#448f6c",
+        "info": "#4a8bad",
+        "warning": "#d4b374",
+        "danger": "#d17575",
+        "light": "#1b2026",
+        "dark": "#e9ecef",
+        "bg": "#121417",
+        "fg": "#dee2e6",
+        "selectbg": "#5a7a94",
+        "selectfg": "#ffffff",
+        "border": "#2d353b",
+        "inputfg": "#dee2e6",
+        "inputbg": "#1b2026",
+        "active": "#263f52",
+    },
+)
+
+theme3_dark = ThemeDefinition(
+    name="theme3_dark",
+    themetype="dark",
+    colors={
+        "primary": "#715A5A",
+        "secondary": "#44444E",
+        "success": "#6B8E6E",
+        "info": "#6D828B",
+        "warning": "#9E8C6B",
+        "danger": "#A65E5E",
+        "light": "#D3DAD9",
+        "dark": "#26252B",
+        "bg": "#37353E",
+        "fg": "#D3DAD9",
+        "selectbg": "#715A5A",
+        "selectfg": "#ffffff",
+        "border": "#44444E",
+        "inputfg": "#ffffff",
+        "inputbg": "#2D2B33",
+        "active": "#856A6A",
+    },
+)
+
+theme3_light = ThemeDefinition(
+    name="theme3_light",
+    themetype="light",
+    colors={
+        "primary": "#715A5A",
+        "secondary": "#BCC4C3", 
+        "success": "#587A5B", 
+        "info": "#556B75",
+        "warning": "#8F7A54", 
+        "danger": "#8F5454",
+        "light": "#ffffff",
+        "dark": "#37353E",
+        "bg": "#E8ECEC",
+        "fg": "#37353E",
+        "selectbg": "#715A5A",
+        "selectfg": "#ffffff",
+        "border": "#A6AFAF",
+        "inputfg": "#37353E",
+        "inputbg": "#ffffff",
+        "active": "#5A4545",
+    },
+)
+
+theme4_light = ThemeDefinition(
+    name="theme4_light",
+    themetype="light",
+    colors={
+        "primary": "#DA0037",
+        "secondary": "#444444",
+        "success": "#2D7F2D",
+        "info": "#2D7FAD",
+        "warning": "#B87F2D",
+        "danger": "#C00030",
+        "light": "#FFFFFF",
+        "dark": "#171717",
+        "bg": "#EDEDED",
+        "fg": "#171717",
+        "selectbg": "#DA0037",
+        "selectfg": "#FFFFFF",
+        "border": "#999999",
+        "inputfg": "#171717",
+        "inputbg": "#FFFFFF",
+        "active": "#B0002F",
+    },
+)
+
+theme4_dark = ThemeDefinition(
+    name="theme4_dark",
+    themetype="dark",
+    colors={
+        "primary": "#DA0037",
+        "secondary": "#EDEDED",
+        "success": "#37A337",
+        "info": "#37A3DA",
+        "warning": "#DA9C37",
+        "danger": "#DA0037",
+        "light": "#EDEDED",
+        "dark": "#171717",
+        "bg": "#444444",
+        "fg": "#EDEDED",
+        "selectbg": "#DA0037",
+        "selectfg": "#FFFFFF",
+        "border": "#555555",
+        "inputfg": "#EDEDED",
+        "inputbg": "#171717",
+        "active": "#E34D6C",
+    },
+)
+
+theme5_dark = ThemeDefinition(
+    name="theme5_dark",
+    themetype="dark",
+    colors={
+        "primary": "#635985",
+        "secondary": "#443C68",
+        "success": "#4CAF50",
+        "info": "#4A90E2",
+        "warning": "#FFB300",
+        "danger": "#D32F2F",
+        "light": "#D3D3D3",
+        "dark": "#0A0815",
+        "bg": "#18122B",
+        "fg": "#D3D3D3",
+        "selectbg": "#635985",
+        "selectfg": "#FFFFFF",
+        "border": "#393053",
+        "inputfg": "#FFFFFF",
+        "inputbg": "#0A0815",
+        "active": "#7C70A0",
+    },
+)
+
+theme5_light = ThemeDefinition(
+    name="theme5_light",
+    themetype="light",
+    colors={
+        "primary": "#18122B",
+        "secondary": "#443C68",
+        "success": "#4CAF50",
+        "info": "#4A90E2",
+        "warning": "#FFB300",
+        "danger": "#D32F2F",
+        "light": "#FFFFFF",
+        "dark": "#18122B",
+        "bg": "#635985",
+        "fg": "#18122B",
+        "selectbg": "#443C68",
+        "selectfg": "#FFFFFF",
+        "border": "#A0A0A0",
+        "inputfg": "#18122B",
+        "inputbg": "#FFFFFF",
+        "active": "#393053",
     },
 )

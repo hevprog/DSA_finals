@@ -18,3 +18,6 @@ git merge origin/main
 
 (para ha mga matindi 🔥 fck it we ball)
 git pull origin main
+
+
+        check themes/ bangin mayda niyo maayunan na theme, or gusto niyo mag add hin theme

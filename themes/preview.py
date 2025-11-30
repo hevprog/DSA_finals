@@ -1,15 +1,13 @@
 import ttkbootstrap as ttk
-from customTheme import theme
-
-
+from customTheme import *
 
 class Main_window(ttk.Window ):
     def __init__(self):
         super().__init__()
 
         style = self.style 
-        style.register_theme(theme) #change this to (theme, theme2)
-        style.theme_use("cstmtheme1") #change this to (cstmtheme1, cstmtheme2)
+        style.register_theme(theme5_light) #change this to (theme1_light, theme2_dark, etc.)
+        style.theme_use("theme5_light") #change this to the name of the theme(theme4_light, theme4_dark)
 
         self.title("DSA Sim")
         self.geometry("1000x600") # or mas duro dako pa like 1000x650 or 1200×700?
