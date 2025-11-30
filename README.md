@@ -1,6 +1,6 @@
-# Final Project: An Interactive Simulator for Data Structures and Algorithms Implementation in Python utilizing the ttkbootstrap library for the user interface.
+## Final Project: An Interactive Simulator for Data Structures and Algorithms Implementation in Python utilizing the ttkbootstrap library for the user interface.
 
-# Contributors:
+## Contributors:
 - Henry V Singzon
 - Kent Andrew Parejas
 - Michael Andre Pacheco
@@ -9,17 +9,17 @@
 
 <hr>
 
-## Checklist:
+### Checklist:
 - [ ] Main UI
 - [x] Tower of Hanoi
 - [ ] Binary Search
 - [x] Counting Sort
-- [ ] Insertion Sort
+- [x] Insertion Sort
 - [ ] Stacks
 
 <hr>
 
-## Notes
+### Notes
 It aton mga class UI butngan nat hin (ttk.Frame), Example:
 ```bash
  class Hanoi_ui(ttk.Frame):
