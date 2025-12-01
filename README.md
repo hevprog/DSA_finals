@@ -28,3 +28,15 @@ It aton mga class UI butngan nat hin (ttk.Frame), Example:
     ...
 ```
 In your class ensure to provide a function that returns the "back" button ex. def back_button()
+
+## IMPORTANT:
+- Please import ttkbootstrap and pygame-ce
+```bash
+    pip install ttkbootstrap
+    pip install pygame-ce    
+```
+- or
+```bash
+    py pip install ttkbootstrap
+    py pip install pygame-ce  
+```
