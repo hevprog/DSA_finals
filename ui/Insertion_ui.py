@@ -2,6 +2,7 @@ import ttkbootstrap as ttk
 from logic.insertion import insertion
 import random as r
 import winsound
+import pygame
 
 class InsertionUi(ttk.Frame):
     def __init__(self, parent):
@@ -15,8 +16,10 @@ class InsertionUi(ttk.Frame):
         self.Label1 = ttk.Label(self)
         self.Label1.pack(pady=5, side="bottom")
         ttk.Button(self, text="Randomize", command=self.randomize_val).pack(side = "bottom", pady=20)
-        self.canvas = ttk.Canvas = ttk.Canvas(self, width=750, height=500)
+        self.canvas = ttk.Canvas(self, width=750, height=500)
         self.canvas.pack(pady=5)
+
+        pygame.mixer.music.pause()
 
         self.coin_values = [63, 22, 12, 23, 45, 34, 11, 23, 78, 99]
         self.coin_items = []
@@ -54,6 +57,7 @@ class InsertionUi(ttk.Frame):
         self.redraw()
     
     def back_button(self):
+        pygame.mixer.music.unpause()
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
