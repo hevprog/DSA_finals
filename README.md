@@ -38,5 +38,6 @@ In your class ensure to provide a function that returns the "back" button ex. de
 - or
 ```bash
     py pip install ttkbootstrap
-    py pip install pygame-ce  
+    py pip install pygame-ce
+    py pip -m install pygame-ce (if using python 3)
 ```
