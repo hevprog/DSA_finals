@@ -12,7 +12,7 @@
 ### Checklist:
 - [ ] Main UI
 - [x] Tower of Hanoi
-- [ ] Binary Search
+- [x] Binary Search
 - [x] Counting Sort
 - [x] Insertion Sort
 - [ ] Stacks
