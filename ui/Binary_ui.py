@@ -27,7 +27,7 @@ class Binary_ui(ttk.Frame):
         input_frame.pack(pady=10)
 
         ttk.Label(input_frame, text="Enter target value: ").pack(side="left", padx=5)
-        ttk.Canvas(self,width=1000,height=200).pack()
+        ttk.Frame(self,width=1000,height=200).pack()
         self.target_entry = ttk.Entry(input_frame, width=10)
         self.target_entry.pack(side="left")
 
