@@ -5,6 +5,7 @@ import time
 import winsound
 import threading
 import ttkbootstrap as ttk
+import playsound
 from ttkbootstrap.constants import *
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -102,7 +103,7 @@ class Hanoi_ui(ttk.Frame):
 
         #na handle hit mouse click
         tower = self.nearest_tower(event.x)
-        self.play_beep(190, 100)
+        self.play_sound(0)
 
         if self.first_highlight == -1:
             self.first_highlight = tower
@@ -150,7 +151,7 @@ class Hanoi_ui(ttk.Frame):
                 if self.is_won():
                     self.won = True
             else:
-                self.play_beep(1000, 200)
+                self.play_sound(1)
 
             self.first_highlight = -1
             self.second_highlight = -1
@@ -273,8 +274,11 @@ class Hanoi_ui(ttk.Frame):
         ]
         return random.choice(colors)
 
-    def play_beep(self,frequency=1000, duration=500):
-        winsound.Beep(frequency, duration)
+    def play_sound(self, error):
+        if error:
+            playsound.playsound('ui/sounds/wrong_move.wav')
+        else:
+            playsound.playsound('ui/sounds/select.wav')
 
     def play_win_music(self):
 
