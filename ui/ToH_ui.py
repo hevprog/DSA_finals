@@ -5,7 +5,7 @@ import time
 import winsound
 import threading
 import ttkbootstrap as ttk
-import playsound
+import pygame
 from ttkbootstrap.constants import *
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -20,6 +20,10 @@ class Hanoi_ui(ttk.Frame):
         super().__init__(parent)
         self.parent = parent
         self.disks_count = ttk.IntVar(value=3)
+
+        pygame.mixer.init()
+        self.inva_move = pygame.mixer.Sound("ui/sounds/wrong_move.wav")
+        self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
 
         #track animation
         self.active_animations = 0
@@ -276,9 +280,9 @@ class Hanoi_ui(ttk.Frame):
 
     def play_sound(self, error):
         if error:
-            playsound.playsound('ui/sounds/wrong_move.wav')
+           self.inva_move.play()
         else:
-            playsound.playsound('ui/sounds/select.wav')
+            self.valid_move.play()
 
     def play_win_music(self):
 
