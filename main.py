@@ -59,7 +59,6 @@ class Main_window(ttk.Window,frame_ops):
     
     #accessors to the clickable widgets
     def is_clicked_ToH(self):
-        pygame.mixer.music.pause()
         return self.button1
     
     def is_clicked_Count(self):
@@ -82,7 +81,6 @@ def switchHanoi(): #change the window to Hanoi UI
     hanoi = Hanoi_ui(window)
     window.unshow(window.get_frame())
     window.show(hanoi)
-    # window.unshow_widgets() # bug
     window.current_frame = hanoi
 
 def switchBinary(): #change to Binary UI

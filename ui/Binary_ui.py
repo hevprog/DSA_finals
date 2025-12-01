@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 from tkinter import Label
 import threading
+import pygame
 from logic.binary import BinarySearchLogic
 
 class Binary_ui(ttk.Frame):
@@ -9,6 +10,7 @@ class Binary_ui(ttk.Frame):
         
         self.parent = parent
         self.logic = BinarySearchLogic(delay=1)
+        pygame.mixer.music.pause()
 
         self.arr = [1,2,3,4,5,6,7,8,9,10]
         self.target = None
@@ -89,4 +91,5 @@ class Binary_ui(ttk.Frame):
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
         self.parent.current_shown_frame = main_menu
+        pygame.mixer.music.unpause()
         
