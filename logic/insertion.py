@@ -22,9 +22,3 @@ class insertion:
     
     def getArray(self):
         return self.arr if sorted else None
-
-if __name__ == "__main__":
-    unsortedArray = [63, 22, 12, 23, 45, 34, 11, 23, 78, 99]
-    insertion = insertion(unsortedArray)
-    insertion.sort()
-    print(insertion.getArray())
