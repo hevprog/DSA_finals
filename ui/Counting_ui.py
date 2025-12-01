@@ -1,3 +1,4 @@
+import tkinter as tk
 import ttkbootstrap as ttk
 from logic.counting import counting
 import random as r

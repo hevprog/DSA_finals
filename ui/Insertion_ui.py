@@ -15,7 +15,7 @@ class InsertionUi(ttk.Frame):
         self.Label1 = ttk.Label(self)
         self.Label1.pack(pady=5, side="bottom")
         ttk.Button(self, text="Randomize", command=self.randomize_val).pack(side = "bottom", pady=20)
-        self.canvas = ttk.Canvas = ttk.Canvas(self, width=750, height=500)
+        self.canvas = ttk.Canvas(self, width=750, height=500)
         self.canvas.pack(pady=5)
 
         self.coin_values = [63, 22, 12, 23, 45, 34, 11, 23, 78, 99]
