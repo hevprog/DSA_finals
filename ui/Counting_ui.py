@@ -2,6 +2,7 @@ import ttkbootstrap as ttk
 from logic.counting import counting
 import random as r
 import winsound
+import pygame
 
 class Counting_ui(ttk.Frame):
     def __init__(self, parent):
@@ -17,6 +18,8 @@ class Counting_ui(ttk.Frame):
         ttk.Button(self,text="Randomize", command=self.randomize_val).pack(side="bottom",pady= 20)
         self.canvas = ttk.Canvas(self, width= 1000,height= 500) # ig 1000 nala em width para ma fix
         self.canvas.pack(pady=5)
+
+        pygame.mixer.music.pause()
 
 
         self.coin_values = [1,1,5,2,4,4,6,7,3,3]
@@ -52,6 +55,7 @@ class Counting_ui(ttk.Frame):
         self.col = "black"
         self.redraw()
     def back_button(self):
+        pygame.mixer.music.unpause()
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
