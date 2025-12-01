@@ -6,7 +6,8 @@ from logic.binary import BinarySearchLogic
 class Binary_ui(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-
+        
+        self.parent = parent
         self.logic = BinarySearchLogic(delay=1)
 
         self.arr = [1,2,3,4,5,6,7,8,9,10]
@@ -18,13 +19,13 @@ class Binary_ui(ttk.Frame):
     def create_widgets(self):
         title = ttk.Label(self, text="Binary Search Visualizer")
         title.pack(pady=20)
-
+        ttk.Button(self,text="back to menu",command=self.back_button).pack(pady=20)
         # Input field
         input_frame = ttk.Frame(self)
         input_frame.pack(pady=10)
 
         ttk.Label(input_frame, text="Enter target value: ").pack(side="left", padx=5)
-
+        ttk.Canvas(self,width=1000,height=200).pack()
         self.target_entry = ttk.Entry(input_frame, width=10)
         self.target_entry.pack(side="left")
 
@@ -33,7 +34,7 @@ class Binary_ui(ttk.Frame):
 
         # Create number labels
         for num in self.arr:
-            lbl = Label(container, text=str(num), width=5, height=2, relief="solid", bg="white")
+            lbl = Label(container, text=str(num), width=5, height=2, relief="groove",bg="white")
             lbl.pack(side="left", padx=5)
             self.label_widgets.append(lbl)
 
