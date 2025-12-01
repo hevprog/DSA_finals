@@ -1,56 +1,83 @@
-import tkinter as tk
 import ttkbootstrap as ttk
-from logic.bin import binarySEARCH
+from tkinter import Label
+import threading
+from logic.binary import BinarySearchLogic
 
-class binary_ui(ttk.Frame):
+class Binary_ui(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
-        self.root = parent
-        ttk.Label(self, text="Enter target number:").pack(pady=5)
-        self.target_number = ttk.Entry(self, width=20)
-        self.target_number.pack(pady=5)
 
-        search_btn = ttk.Button(self, text="Run Binary Search", command=self.Run_Search, bootstyle="success")
-        search_btn.pack(pady=10)
+        self.logic = BinarySearchLogic(delay=1)
 
-        self.output_text = tk.Text(self, height=15, width=70)
-        self.output_text.pack(pady=10)
-        ttk.Button(self,text="back to menu").pack()
-        
-    def Sort_Input(self):
-        arr = self.arr_entry.get()
-        try:
-            unsorted_arr = list(map(int, arr.split(",")))
-            unsorted_arr.sort()
-           
-            self.arr_entry.delete(0, tk.END)
-            self.arr_entry.insert(0, ",".join(map(str, unsorted_arr)))
+        self.arr = [1,2,3,4,5,6,7,8,9,10]
+        self.target = None
 
-            self.output_text.delete("1.0", tk.END)
-            self.output_text.insert(tk.END, f"Sorted Array: {arr}\n")
-        except ValueError:
-            self.output_text.delete("1.0", tk.END)
-            self.output_text.insert(tk.END, "Invalid input. Please enter integers only.")
+        self.label_widgets = []
+        self.create_widgets()
 
-    def Run_Search(self):
-        arr_text = self.arr_entry.get()
-        target_text = self.target_number.get()
+    def create_widgets(self):
+        title = ttk.Label(self, text="Binary Search",font=25)
+        title.pack(pady=20)
 
-        try:
-            arr = list(map(int, arr_text.split(",")))
-            arr.sort()
-            target = int(target_text)
+        input_frame = ttk.Frame(self)
+        input_frame.pack(pady=10)
 
-            index, steps = self.Binary_Search(arr, target)
+        ttk.Label(input_frame, text="Enter target value: ",font=15).pack(side="left", padx=5)
 
-            self.output_text.delete("1.0", tk.END)
-            self.output_text.insert(tk.END, f"Array: {arr}\nTarget: {target}\n\n")
-            for step in steps:
-                self.output_text.insert(tk.END, step + "\n")
+        self.target_entry = ttk.Entry(input_frame, width=10)
+        self.target_entry.pack(side="left")
 
-        except ValueError:
-            self.output_text.delete("1.0", tk.END)
-            self.output_text.insert(tk.END, "Invalid input. Please enter integers only.")
+        container = ttk.Frame(self)
+        container.pack(pady=20)
+
+        for num in self.arr:
+            lbl = Label(container, text=str(num), width=5, height=2, relief="solid")
+            lbl.pack(side="left", padx=5)
+            self.label_widgets.append(lbl)
+
+        start_btn = ttk.Button(self, text="Search", bootstyle="primary",
+                               command=self.run_Search)
+        start_btn.pack(pady=20)
+
     
-    def back_button():
-        return ttk.button
+    def ui_callback(self, index, state):
+        if state == "reset":
+            for lbl in self.label_widgets:
+                if lbl.cget("bg") not in ("red", "green"):
+                    lbl.config(bg="white")
+
+        elif state == "highlight":
+            self.label_widgets[index].config(bg="yellow")
+
+        elif state == "found":
+            self.label_widgets[index].config(bg="green")
+
+        elif state == "left_red":
+            for i in range(0, index + 1):
+                self.label_widgets[i].config(bg="red")
+
+        elif state == "right_red":
+            for i in range(index, len(self.label_widgets)):
+                self.label_widgets[i].config(bg="red")
+
+    def run_Search(self):
+
+        # Validate input
+        try:
+            val = int(self.target_entry.get())
+            self.target = val
+        except ValueError:
+            # highlight input box in red for invalid input
+            self.target_entry.delete(0, "end")
+            self.target_entry.insert(0, "Invalid")
+            return
+        
+        # Reset colors before new search
+        for lbl in self.label_widgets:
+            lbl.config(bg="white")
+
+        threading.Thread(
+            target=self.logic.run_search, 
+            args=(self.arr, self.target, self.ui_callback),
+            daemon=True
+        ).start()

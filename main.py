@@ -2,7 +2,7 @@ import ttkbootstrap as ttk
 from ui.ToH_ui import Hanoi_ui
 from ui.Insertion_ui import InsertionUi 
 from ui.Counting_ui import Counting_ui
-from ui.Binary_ui import binary_ui
+from ui.Binary_ui import Binary_ui
 from ui.Stacks_ui import stack_ui
 
 #basic operations with the frame
@@ -77,7 +77,7 @@ def switchHanoi(): #change the window to Hanoi UI
     window.current_frame = hanoi
 
 def switchBinary(): #change to Binary UI
-    binary = binary_ui(window) # bin keyword is a function
+    binary = Binary_ui(window) # bin keyword is a function
     window.show(binary)
     window.unshow(window.get_frame())
     window.current_frame = binary
