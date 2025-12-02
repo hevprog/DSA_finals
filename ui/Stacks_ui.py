@@ -17,7 +17,7 @@ class stack_ui(ttk.Frame):
         self.parent = parent
         
         pygame.mixer.music.unload()
-        pygame.mixer.music.load("C:/Users/LENOVO/Downloads/FINALS DSA\DSA_finals/files/Jeremih - oui (Official Audio).mp3")
+        pygame.mixer.music.load("ui/sounds/Jeremih - oui (Official Audio).mp3")
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.5)
 
@@ -53,12 +53,12 @@ class stack_ui(ttk.Frame):
         self.disk_push()
 
     def pop_SEffect(self):
-        sound_effect = pygame.mixer.Sound("C:/Users/LENOVO\Downloads/FINALS DSA/DSA_finals/files/scream cut.mp3")
+        sound_effect = pygame.mixer.Sound("ui/sounds/scream cut.mp3")
         sound_effect.play()
         sound_effect.set_volume(0.2)
     
     def push_SEffects(self):
-        sound_effect = pygame.mixer.Sound("C:/Users/LENOVO/Downloads/FINALS DSA/DSA_finals/files/aughh shorter.mp3")
+        sound_effect = pygame.mixer.Sound("ui/sounds/aughh shorter.mp3")
         sound_effect.play()
         sound_effect.set_volume(0.8)
         
