@@ -16,12 +16,13 @@ class stack_ui(ttk.Frame):
         super().__init__(parent)
         self.parent = parent
         
-        pygame.init()
-        pygame.mixer.init()
+        pygame.mixer.music.unload()
         pygame.mixer.music.load("C:/Users/LENOVO/Downloads/FINALS DSA\DSA_finals/files/Jeremih - oui (Official Audio).mp3")
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.5)
 
+        self.custom_style = ttk.Style()
+        self.custom_style.configure('danger.TButton', font=('Verdana', 8))
         
         self.text_display = ttk.StringVar()
         self.parent.attributes("-fullscreen", TRUE)
@@ -229,8 +230,16 @@ class stack_ui(ttk.Frame):
     
         
     def back_button(self):
-        pygame.mixer.music.stop()
+        self.custom_style.configure('danger.TButton', font=('Arial', 15))
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load("ui/sounds/main_background_music.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.5)
         self.parent.destroy()
+        
+       
+        
+        
         
         
     def exit_full(self, event):
@@ -243,6 +252,8 @@ if __name__ == "__main__":
         title="Stack",
         resizable=(FALSE, FALSE)
     )
+    pygame.init()
+    pygame.mixer.init()
     window.attributes("-fullscreen", True)
     test_window = stack_ui(window)
     test_window.pack(fill="both", expand=True)
