@@ -9,8 +9,7 @@ from ui.Stacks_ui import stack_ui
 #basic operations with the frame
 #get_frame()**returns a frame of the inherited class
 class frame_ops: 
-    frame:ttk.Frame 
-
+    frame:ttk.Frame
     def get_frame(self):
         return self.frame
     def unshow(self,frame:ttk.Frame):
@@ -18,6 +17,12 @@ class frame_ops:
     def show(self, frame:ttk.Frame):
         frame.pack()
         frame.tkraise()
+    def create_window(self):
+        self.temp = ttk.Toplevel(self)
+        self.temp.attributes("-fullscreen", True)
+        self.temp.title("STacks")
+        return self.temp
+
 
 class Main_window(ttk.Window,frame_ops):
     def __init__(self):
@@ -102,10 +107,9 @@ def switchInsert(): #change to Insert UI
     window.current_frame= InsertionUi
 
 def switchStacks(): #change to Stacks UI
-    stack = stack_ui(window)
-    window.show(stack)
-    window.unshow(window.get_frame())
-    window.current_frame= stack_ui
+    temp = window.create_window()
+    stack = stack_ui(temp)
+    stack.pack(fill="both", expand=True)
 
 
 if __name__ == "__main__":
