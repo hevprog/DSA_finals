@@ -10,7 +10,11 @@ class Binary_ui(ttk.Frame):
         
         self.parent = parent
         self.logic = BinarySearchLogic(delay=1)
+        
+        self.inva_move = pygame.mixer.Sound("ui/sounds/wrong_move.wav")
+        self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
         pygame.mixer.music.pause()
+        
 
         self.arr = [1,2,3,4,5,6,7,8,9,10]
         self.target = None
@@ -52,17 +56,22 @@ class Binary_ui(ttk.Frame):
 
         elif state == "highlight":
             self.label_widgets[index].config(bg="yellow")
-
+            self.play_sound() 
+            
         elif state == "found":
             self.label_widgets[index].config(bg="green")
 
         elif state == "left_red":
             for i in range(0, index + 1):
                 self.label_widgets[i].config(bg="red")
+            
+            self.inva_move.play()
 
         elif state == "right_red":
             for i in range(index, len(self.label_widgets)):
                 self.label_widgets[i].config(bg="red")
+              
+            self.inva_move.play()          
 
     def start_visualization(self):
 
@@ -79,11 +88,13 @@ class Binary_ui(ttk.Frame):
         # Reset colors before new search
         for lbl in self.label_widgets:
             lbl.config(bg="white")
+            
 
         threading.Thread(
             target=self.logic.run_search, 
             args=(self.arr, self.target, self.ui_callback),
             daemon=True
+            
         ).start()
 
     def back_button(self):
@@ -92,4 +103,7 @@ class Binary_ui(ttk.Frame):
         self.parent.show(main_menu)
         self.parent.current_shown_frame = main_menu
         pygame.mixer.music.unpause()
+        
+    def play_sound(self):
+        self.valid_move.play()    
         
