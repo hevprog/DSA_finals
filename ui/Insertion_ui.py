@@ -74,8 +74,8 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         self.play_sound()
         total_delay_step1 = self.animate_sort_step1()
         self.counts = ttk.Label(self, text="HIII").pack(pady=5)
-        self.d
-        self.redraw()
+        self.display_countings()
+        self.canvas.after(total_delay_step1, self.animate_sort)
 
     def Shuffle(self):
         
@@ -111,51 +111,14 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         self.parent.show(main_menu)
         self.parent.current_shown_frame = main_menu
     
-    def redraw(self):
-        self.coin_items = []
-        x_start = 50
-        y_pos = 100
-        coin_size = 50
-        gap = 20
-        
-        for i, value in enumerate(self.coin_values):
 
-            x1 = x_start + i * (coin_size + gap)
-            y1 = y_pos
-            x2 = x1 + coin_size
-            y2 = y_pos + coin_size
-
-            self.canvas.create_oval(x1, y1, x2, y2, fill="pink" if value % 2 == 0 else "lightgreen", width=2, outline=self.col)
-            center_x = (x1 + x2) / 2
-            center_y = (y1 + y2) / 2
-            self.canvas.create_text(center_x, center_y, text=str(value), font=("Helvetica", 16, "bold"))
-
-            if(self.col != "green"):
-                self.play_sound()
                 
                 
     def play_sound(self):
         self.valid_move.play()
 
-    def display_countings(self):
-        DEFAULT_Y = 100
-        incn = inconvient_typing.tkInt
-        incs = inconvient_typing.tkStr
-        a_str = [incs("Zero"),incs("One"),incs("Two"),incs("Three"),incs("Four"),incs("Five"),
-                 incs("Six"),incs("Seven"),incs("Eight"),incs("Nine"),incs("Ten")]
-        a = [incn(0)]*len(self.ordered_places)
-        for n,val in enumerate(self.count):
-            a[n] = ttk.IntVar(value=val)
-        for n in range(len(self.ordered_places)):
-            lbl = ttk.Label(self, textvariable=a[n])
-            lbl.place(x=self.ordered_places[n]+((self.coin_size)/2), y=DEFAULT_Y)
 
-            lbl_str = ttk.Label(self, textvariable=a_str[n])
-            lbl_str.place(x=self.ordered_places[n]+((self.coin_size)/2), y=DEFAULT_Y+20)
-            self.labelcounts.append(lbl)
-            self.labelcounts_Str.append(lbl_str)
-
-def moveDa_coin(self, tag, new_x, base_y, delay, done_callback=None):
+    def moveDa_coin(self, tag, new_x, base_y, delay, done_callback=None):
         
         self.canvas.after(delay, lambda: self.canvas.moveto(tag, new_x, base_y - 40))
         self.canvas.after(delay + 200, lambda: self.canvas.moveto(tag, new_x, base_y))
@@ -163,7 +126,7 @@ def moveDa_coin(self, tag, new_x, base_y, delay, done_callback=None):
         if done_callback:
             self.canvas.after(delay + 250, done_callback)
 
-def animate_sort_step1(self):
+    def animate_sort_step1(self):
         sorted_vals = self.coin_values[:]
         used = [0] * len(self.sortArr)
         unique_vals = sorted(set(sorted_vals))
@@ -191,46 +154,63 @@ def animate_sort_step1(self):
 
         return delay + 500
 
-def animate_sort(self):
-    sorted_vals = self.coin_values[:]  # This is CountingC.get_array()
-    used = [0] * len(self.sortArr)
-    delay = 0
-    coin_size = 50
-    gap = 20
-    x_start = 150
-    y_row = 100  # final row for sorted coins
+    def animate(self):
+        delay = 0
+        coin_size = 50
+        gap = 20
+        x_start = 150
+        y_row = 100         
 
-    for position_index, value in enumerate(sorted_vals):
-        for i, coin in enumerate(self.sortArr):
-            tag = coin["coin"]
-            text_tag = tag + "_txt"
-            original_val = int(self.canvas.itemcget(text_tag, "text"))
+        for i in range(len(self.coin_values)):
+            key = self.coin_values[i]
+            j = i - 1
+            while j >= 0 and self.arr[j] > key:
+                self.arr[j + 1] = self.arr[j];
+                j-=1
+            self.arr[j + 1] = key;
 
-            if original_val == value and not used[i]:
-                used[i] = True
+
+    def animate_sort(self):
+        sorted_vals = self.coin_values[:]  # This is CountingC.get_array()
+        used = [0] * len(self.sortArr)
+        delay = 0
+        coin_size = 50
+        gap = 20
+        x_start = 150
+        y_row = 100  # final row for sorted coins
+
+        for position_index, value in enumerate(sorted_vals):
+            for i, coin in enumerate(self.sortArr):
+                tag = coin["coin"]
+                text_tag = tag + "_txt"
+                original_val = int(self.canvas.itemcget(text_tag, "text"))
+
+                if original_val > value and not used[i]:
+                    used[i] = True
 
                     # Current position (stacked after step1)
-                current_coords = self.canvas.coords(tag)
-                current_x = current_coords[0] if len(current_coords) >= 2 else self.coin_posx[i]
-                current_y = current_coords[1] if len(current_coords) >= 2 else self.coin_posy[i]
+                    current_coords = self.canvas.coords(tag)
+                    current_x = current_coords[0] if len(current_coords) >= 2 else self.coin_posx[i]
+                    current_y = current_coords[1] if len(current_coords) >= 2 else self.coin_posy[i]
 
                     # Target position according to sorted array
-                new_x = x_start + position_index * (coin_size + gap)
-                new_y = y_row
+                    new_x = x_start + position_index * (coin_size + gap)
+                    new_y = y_row
 
-                self.moveDa_coin(tag, new_x, new_y, delay)
-                delay += 200
-                break
-    for lbl in self.labelcounts:
-        lbl.destroy()
-    for lbl in self.labelcounts_Str:
-        lbl.destroy()
-    for coin in self.coins:
-        shape_tag = coin + "_shape"
-        self.after(delay, lambda t= shape_tag :self.canvas.itemconfig(t,width=5,outline="lime"))
-        self.after(delay+100, lambda t= shape_tag :self.canvas.itemconfig(t,width=2,outline="black"))
+                    self.moveDa_coin(tag, new_x, new_y, delay)
+                    delay += 200
+                    break
+    
+        for lbl in self.labelcounts:
+            lbl.destroy()
+        for lbl in self.labelcounts_Str:
+            lbl.destroy()
+        for coin in self.coins:
+            shape_tag = coin + "_shape"
+            self.after(delay, lambda t= shape_tag :self.canvas.itemconfig(t,width=5,outline="lime"))
+            self.after(delay+100, lambda t= shape_tag :self.canvas.itemconfig(t,width=2,outline="black"))
 
-    def play_sound(self,n=0,ms=3000):
-        self.valid_move.play(loops=n)
-    def play_sound2(self,n=0,ms=3000):
-        self.notif_random.play(loops=n)
+def play_sound(self,n=0,ms=3000):
+    self.valid_move.play(loops=n)
+def play_sound2(self,n=0,ms=3000):
+    self.notif_random.play(loops=n)

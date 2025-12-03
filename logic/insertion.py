@@ -22,3 +22,4 @@ class insertion:
     
     def getArray(self):
         return self.arr if sorted else None
+# 
