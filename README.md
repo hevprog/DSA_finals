@@ -12,19 +12,33 @@
 ### Checklist:
 - [ ] Main UI
 - [x] Tower of Hanoi
-- [ ] Binary Search
+- [x] Binary Search
 - [x] Counting Sort
 - [x] Insertion Sort
-- [ ] Stacks
+- [x] Stacks
 
 <hr>
 
 ### Notes
-It aton mga class UI butngan nat hin (ttk.Frame), Example:
-```bash
- class Hanoi_ui(ttk.Frame):
 
-    def __init__(self, parent):
-    ...
-```
+All goods na it mga modules, Main UI nala it kaylangan ig polish tas an steps pag sort
+- [ ] An Menu na aada ha top mismo
+- [ ] Igpa full-screen natanan?
+- [ ] Counting sort steps
+- [ ] Insertion sort steps
+
+
 In your class ensure to provide a function that returns the "back" button ex. def back_button()
+
+## IMPORTANT:
+- Please import ttkbootstrap and pygame-ce
+```bash
+    pip install ttkbootstrap
+    pip install pygame-ce    
+```
+- or
+```bash
+    py pip install ttkbootstrap
+    py pip install pygame-ce
+    py pip -m install pygame-ce (if using python 3)
+```

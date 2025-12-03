@@ -1,13 +1,17 @@
 import ttkbootstrap as ttk
 from logic.insertion import insertion
 import random as r
-import winsound
+import pygame
 
 class InsertionUi(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.col = 'black'
         self.parent = parent
+        
+        self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
+        pygame.mixer.music.pause()
+        
         ttk.Label(self, text="This is the Insertion sort").pack(pady = 10)
         ttk.Button(self,text="back to menu", command=self.back_button).pack()
         ttk.Button(self, text="Sort", command=self.sorting).pack(side ="bottom", pady=10)
@@ -17,6 +21,8 @@ class InsertionUi(ttk.Frame):
         ttk.Button(self, text="Randomize", command=self.randomize_val).pack(side = "bottom", pady=20)
         self.canvas = ttk.Canvas(self, width=750, height=500)
         self.canvas.pack(pady=5)
+
+        pygame.mixer.music.pause()
 
         self.coin_values = [63, 22, 12, 23, 45, 34, 11, 23, 78, 99]
         self.coin_items = []
@@ -44,7 +50,7 @@ class InsertionUi(ttk.Frame):
         insertionC = insertion(self.coin_values)
         insertionC.sort()
         self.col = "green"
-        winsound.Beep(500, 20)
+        self.play_sound()
         self.redraw()
 
     def randomize_val(self):
@@ -54,6 +60,7 @@ class InsertionUi(ttk.Frame):
         self.redraw()
     
     def back_button(self):
+        pygame.mixer.music.unpause()
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
@@ -79,4 +86,8 @@ class InsertionUi(ttk.Frame):
             self.canvas.create_text(center_x, center_y, text=str(value), font=("Helvetica", 16, "bold"))
 
             if(self.col != "green"):
-                winsound.Beep(1000,100)
+                self.play_sound()
+                
+                
+    def play_sound(self):
+        self.valid_move.play()

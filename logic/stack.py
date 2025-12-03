@@ -32,7 +32,7 @@ class stack:
     
     def isEmpty(self):
         isEmpty = not bool(stack)
-
+        
     def size(self):
         print("Size: ",len(stack))
             

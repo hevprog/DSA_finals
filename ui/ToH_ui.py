@@ -3,9 +3,8 @@ import sys
 import os
 import random
 import time
-import winsound
-import threading
 import ttkbootstrap as ttk
+import pygame
 from ttkbootstrap.constants import *
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -20,6 +19,11 @@ class Hanoi_ui(ttk.Frame):
         super().__init__(parent)
         self.parent = parent
         self.disks_count = ttk.IntVar(value=3)
+
+        self.inva_move = pygame.mixer.Sound("ui/sounds/wrong.mp3")
+        self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
+        self.win_music = pygame.mixer.Sound('ui/sounds/victory.mp3')
+        pygame.mixer.music.pause()
 
         #track animation
         self.active_animations = 0
@@ -103,7 +107,7 @@ class Hanoi_ui(ttk.Frame):
 
         #na handle hit mouse click
         tower = self.nearest_tower(event.x)
-        self.play_beep(190, 100)
+        self.play_sound(0)
 
         if self.first_highlight == -1:
             self.first_highlight = tower
@@ -151,7 +155,7 @@ class Hanoi_ui(ttk.Frame):
                 if self.is_won():
                     self.won = True
             else:
-                self.play_beep(1000, 200)
+                self.play_sound(1)
 
             self.first_highlight = -1
             self.second_highlight = -1
@@ -274,25 +278,15 @@ class Hanoi_ui(ttk.Frame):
         ]
         return random.choice(colors)
 
-    def play_beep(self,frequency=1000, duration=500):
-        winsound.Beep(frequency, duration)
+    def play_sound(self, error):
+        if error:
+           self.inva_move.play()
+        else:
+            self.valid_move.play()
 
     def play_win_music(self):
-
-        def play_music():
-            melody = [(520, 300), (660, 300), (790, 300), (1040, 800), (0, 200), (1040, 300), (1175, 600), (0, 200), (1175, 300), (1320, 300), (1400, 300), (1570, 600)]
-
-            for frequency, duration in melody:
-
-                if frequency > 0:
-                    winsound.Beep(frequency, duration)
-                else:
-                    time.sleep(duration / 800)
+        self.win_music.play()
         
-        #ma himo ka hin another thread para ig run it music -> diri ma freeze it program
-        music_thread = threading.Thread(target=play_music)
-        music_thread.daemon = True 
-        music_thread.start()
 
     #helper functions para mag back to main
     def get_frame(self):
@@ -306,6 +300,7 @@ class Hanoi_ui(ttk.Frame):
         frame.tkraise()
 
     def back_button(self):
+        pygame.mixer.music.unpause()
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
@@ -313,6 +308,9 @@ class Hanoi_ui(ttk.Frame):
         # super(self.parent.widgets()) #BUGG
 
 if __name__ == "__main__": #pag test or ig run it UI mismo
+    pygame.init()
+    pygame.mixer.init()
+
     root = ttk.Window(themename="superhero")
     root.title("Hanoi UI")
     root.geometry("1000x600")

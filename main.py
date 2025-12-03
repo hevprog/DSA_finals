@@ -1,16 +1,17 @@
 import tkinter as tk
 import ttkbootstrap as ttk
+import pygame
 from ui.ToH_ui import Hanoi_ui
 from ui.Insertion_ui import InsertionUi 
 from ui.Counting_ui import Counting_ui
-from ui.Binary_ui import binary_ui
+from ui.Binary_ui import Binary_ui
 from ui.Stacks_ui import stack_ui
+from ui.Credits import credits
 
 #basic operations with the frame
 #get_frame()**returns a frame of the inherited class
 class frame_ops: 
     frame:ttk.Frame
-
     def get_frame(self):
         return self.frame
     def unshow(self,frame:ttk.Frame):
@@ -18,11 +19,17 @@ class frame_ops:
     def show(self, frame:ttk.Frame):
         frame.pack()
         frame.tkraise()
+    def create_window(self):
+        self.temp = ttk.Toplevel(self)
+        self.temp.attributes("-fullscreen", True)
+        self.temp.title("STacks")
+        return self.temp
+
 
 class Main_window(ttk.Window,frame_ops):
     def __init__(self):
         super().__init__(themename="vapor") # puydi kita mag darkly or cyborg na theme, kamo bahala
-        self.title("DSA Sim")
+        self.title("DSA Simulator")
         self.geometry("1000x600") # or mas duro dako pa like 1000x650 or 1200×700?
         self.resizable(False, False)
         self.frame = ttk.Frame(master=self)
@@ -30,27 +37,69 @@ class Main_window(ttk.Window,frame_ops):
         self.frame.pack()
         self.custom_style = ttk.Style()
         self.custom_style.configure('primary.TButton', font=('Arial', 15))
+        self.custom_style.configure('danger.TButton', font=('Arial', 15))
+        
+        pygame.init()
+        pygame.mixer.init()
 
+        pygame.mixer.music.load("ui/sounds/main_background_music.mp3")
+        pygame.mixer.music.set_volume(0.3)
+
+        self.create_menu()
         self.widgets()
 
     def widgets(self):
-        self.label1 = ttk.Label(self.frame, text="Data Structures and Algorithms Simulator", font=("Arial", 31, "bold"))
+        self.label1 = ttk.Label(self.frame, text="Data Structures and Algorithms Simulator", font=("Arial", 25, "bold"))
 
-        self.button1 = ttk.Button(self, text="Tower of Hanoi", bootstyle="primary", width=25)
-        self.button2 = ttk.Button(self, text="Counting sort", bootstyle="primary", width=25)
-        self.button3 = ttk.Button(self, text="Insertion sort", bootstyle="primary", width=25)
-        self.button4 = ttk.Button(self, text="Stacks", bootstyle="primary", width=25)
-        self.button5 = ttk.Button(self, text="Binary search", bootstyle="primary", width=25)
-        self.button6 = ttk.Button(self, text="Quit", bootstyle="danger", width=45)
+        self.button1 = ttk.Button(self, text="Tower of Hanoi", bootstyle="primary", width=20)
+        self.button2 = ttk.Button(self, text="Counting sort", bootstyle="primary", width=20)
+        self.button3 = ttk.Button(self, text="Insertion sort", bootstyle="primary", width=20)
+        self.button4 = ttk.Button(self, text="Stacks", bootstyle="primary", width=20)
+        self.button5 = ttk.Button(self, text="Binary search", bootstyle="primary", width=20)
+        self.button6 = ttk.Button(self, text="Quit", bootstyle="danger", width=20)
         self.label1.pack(pady=20)
 
-        self.button1.place(x=80, y=150)
-        self.button2.place(x=600, y=150)
-        self.button3.place(x=80, y=300)
-        self.button4.place(x=600, y=300)
-        self.button5.place(x=80, y=450)
-        self.button6.place(x=600, y=450)
-    
+        self.button1.place(x=150, y=150)
+        self.button2.place(x=550, y=150)
+        self.button3.place(x=150, y=300)
+        self.button4.place(x=550, y=300)
+        self.button5.place(x=150, y=450)
+        self.button6.place(x=550, y=450)
+
+    def create_menu(self):
+        menu_bar = ttk.Menu(self)
+        self.config(menu=menu_bar)
+
+        simulations_menu = ttk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="SIMULATIONS", menu=simulations_menu) 
+
+        simulations_menu.add_command(label="Tower of Hanoi", command=switchHanoi)
+        simulations_menu.add_command(label="Counting Sort", command=switchCounting)
+        simulations_menu.add_command(label="Insertion Sort", command=switchInsert)
+        simulations_menu.add_command(label="Binary Search", command=switchBinary)
+        simulations_menu.add_command(label="Stacks", command=switchStacks)
+        simulations_menu.add_separator()
+        simulations_menu.add_command(label="Main Menu", command=self.return_to_main)
+
+        Credits_page = ttk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Credits", menu=Credits_page)
+        Credits_page.add_command(label="Go to credits",command=showcredits)
+        Credits_page.add_separator()
+        Credits_page.add_command(label="Main Menu", command=self.return_to_main)
+
+    def return_to_main(self):
+        if hasattr(self, 'current_frame') and self.current_frame != self.frame:
+            self.unshow(self.current_frame)
+            self.show(self.frame)
+            self.current_frame = self.frame
+
+    def force_back(self):
+        if hasattr(self, "current_frame") and self.current_frame != self.frame:
+                if hasattr(self.current_frame, "back_button"):
+                    self.current_frame.back_button()
+                
+
+
     #accessors to the clickable widgets
     def is_clicked_ToH(self):
         return self.button1
@@ -60,6 +109,7 @@ class Main_window(ttk.Window,frame_ops):
     
     def is_clicked_Insert(self):
         return self.button3
+    
     def is_clicked_Stacks(self):
         return self.button4
 
@@ -71,35 +121,44 @@ class Main_window(ttk.Window,frame_ops):
 
 #change window scenes
 def switchHanoi(): #change the window to Hanoi UI
+    window.force_back()
     hanoi = Hanoi_ui(window)
     window.unshow(window.get_frame())
     window.show(hanoi)
-    # window.unshow_widgets() # bug
     window.current_frame = hanoi
 
 def switchBinary(): #change to Binary UI
-    binary = binary_ui(window) # bin keyword is a function
+    window.force_back()
+    binary = Binary_ui(window) # bin keyword is a function
     window.show(binary)
     window.unshow(window.get_frame())
     window.current_frame = binary
 
 def switchCounting(): #change to counting UI
+    window.force_back()
     Counting= Counting_ui(window)
     window.show(Counting)
     window.unshow(window.get_frame())
     window.current_frame=Counting
 
 def switchInsert(): #change to Insert UI
+    window.force_back()
     insertion = InsertionUi(window)
     window.show(insertion)
     window.unshow(window.get_frame())
-    window.current_frame= InsertionUi
-def switchStacks(): #change to Stacks UI
-    stack = stack_ui(window)
-    window.show(stack)
-    window.unshow(window.get_frame())
-    window.current_frame= stack_ui
+    window.current_frame = insertion
 
+def switchStacks(): #change to Stacks UI
+    temp = window.create_window()
+    stack = stack_ui(temp)
+    stack.pack(fill="both", expand=True)
+
+def showcredits(): #CREDITTSS
+    window.force_back()
+    credit = credits(window)
+    window.show(credit)
+    window.unshow(window.get_frame())
+    window.current_frame = credit
 
 if __name__ == "__main__":
     window = Main_window()
@@ -109,6 +168,7 @@ if __name__ == "__main__":
     window.is_clicked_Binary().configure(command=switchBinary)
     window.is_clicked_Stacks().configure(command=switchStacks)
     window.is_clicked_quit().configure(command=window.quit)
+    pygame.mixer.music.play(loops=-1)
     window.mainloop()
 
 
