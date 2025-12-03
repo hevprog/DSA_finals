@@ -5,6 +5,7 @@ from ui.Insertion_ui import InsertionUi
 from ui.Counting_ui import Counting_ui
 from ui.Binary_ui import Binary_ui
 from ui.Stacks_ui import stack_ui
+from ui.Credits import credits
 
 #basic operations with the frame
 #get_frame()**returns a frame of the inherited class
@@ -79,6 +80,12 @@ class Main_window(ttk.Window,frame_ops):
         simulations_menu.add_separator()
         simulations_menu.add_command(label="Main Menu", command=self.return_to_main)
 
+        Credits_page = ttk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="Credits", menu=Credits_page)
+        Credits_page.add_command(label="Go to credits",command=showcredits)
+        Credits_page.add_separator()
+        Credits_page.add_command(label="Main Menu", command=self.return_to_main)
+
     def return_to_main(self):
         if hasattr(self, 'current_frame') and self.current_frame != self.frame:
             self.unshow(self.current_frame)
@@ -145,6 +152,12 @@ def switchStacks(): #change to Stacks UI
     stack = stack_ui(temp)
     stack.pack(fill="both", expand=True)
 
+def showcredits(): #CREDITTSS
+    window.force_back()
+    credit = credits(window)
+    window.show(credit)
+    window.unshow(window.get_frame())
+    window.current_frame = credit
 
 if __name__ == "__main__":
     window = Main_window()
