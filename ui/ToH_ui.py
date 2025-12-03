@@ -19,7 +19,7 @@ class Hanoi_ui(ttk.Frame):
         self.parent = parent
         self.disks_count = ttk.IntVar(value=3)
 
-        self.inva_move = pygame.mixer.Sound("ui/sounds/wrong_move.wav")
+        self.inva_move = pygame.mixer.Sound("ui/sounds/wrong.mp3")
         self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
         self.win_music = pygame.mixer.Sound('ui/sounds/victory.mp3')
         pygame.mixer.music.pause()

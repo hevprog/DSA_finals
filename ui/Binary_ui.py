@@ -13,6 +13,7 @@ class Binary_ui(ttk.Frame):
         
         self.inva_move = pygame.mixer.Sound("ui/sounds/wrong_move.wav")
         self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
+        self.found_fx = pygame.mixer.Sound("ui/sounds/correct.mp3")
         pygame.mixer.music.pause()
         
 
@@ -60,6 +61,7 @@ class Binary_ui(ttk.Frame):
             
         elif state == "found":
             self.label_widgets[index].config(bg="green")
+            self.found_fx.play()
 
         elif state == "left_red":
             for i in range(0, index + 1):
