@@ -42,6 +42,8 @@ class Main_window(ttk.Window,frame_ops):
 
         pygame.mixer.music.load("ui/sounds/main_background_music.mp3")
         pygame.mixer.music.set_volume(0.3)
+
+        self.create_menu()
         self.widgets()
 
     def widgets(self):
@@ -61,7 +63,35 @@ class Main_window(ttk.Window,frame_ops):
         self.button4.place(x=550, y=300)
         self.button5.place(x=150, y=450)
         self.button6.place(x=550, y=450)
-    
+
+    def create_menu(self):
+        menu_bar = ttk.Menu(self)
+        self.config(menu=menu_bar)
+
+        simulations_menu = ttk.Menu(menu_bar, tearoff=0)
+        menu_bar.add_cascade(label="SIMULATIONS", menu=simulations_menu) 
+
+        simulations_menu.add_command(label="Tower of Hanoi", command=switchHanoi)
+        simulations_menu.add_command(label="Counting Sort", command=switchCounting)
+        simulations_menu.add_command(label="Insertion Sort", command=switchInsert)
+        simulations_menu.add_command(label="Binary Search", command=switchBinary)
+        simulations_menu.add_command(label="Stacks", command=switchStacks)
+        simulations_menu.add_separator()
+        simulations_menu.add_command(label="Main Menu", command=self.return_to_main)
+
+    def return_to_main(self):
+        if hasattr(self, 'current_frame') and self.current_frame != self.frame:
+            self.unshow(self.current_frame)
+            self.show(self.frame)
+            self.current_frame = self.frame
+
+    def force_back(self):
+        if hasattr(self, "current_frame") and self.current_frame != self.frame:
+                if hasattr(self.current_frame, "back_button"):
+                    self.current_frame.back_button()
+                
+
+
     #accessors to the clickable widgets
     def is_clicked_ToH(self):
         return self.button1
@@ -83,28 +113,32 @@ class Main_window(ttk.Window,frame_ops):
 
 #change window scenes
 def switchHanoi(): #change the window to Hanoi UI
+    window.force_back()
     hanoi = Hanoi_ui(window)
     window.unshow(window.get_frame())
     window.show(hanoi)
     window.current_frame = hanoi
 
 def switchBinary(): #change to Binary UI
+    window.force_back()
     binary = Binary_ui(window) # bin keyword is a function
     window.show(binary)
     window.unshow(window.get_frame())
     window.current_frame = binary
 
 def switchCounting(): #change to counting UI
+    window.force_back()
     Counting= Counting_ui(window)
     window.show(Counting)
     window.unshow(window.get_frame())
     window.current_frame=Counting
 
 def switchInsert(): #change to Insert UI
+    window.force_back()
     insertion = InsertionUi(window)
     window.show(insertion)
     window.unshow(window.get_frame())
-    window.current_frame= InsertionUi
+    window.current_frame = insertion
 
 def switchStacks(): #change to Stacks UI
     temp = window.create_window()
