@@ -87,7 +87,7 @@ class Counting_ui(ttk.Frame,inconvient_typing):
             shape_tag = coin + "_shape"
             new_value = self.coin_values[i]
             self.canvas.itemconfig(tag,text=str(new_value))
-            self.after(100, lambda t= shape_tag :self.canvas.itemconfig(t,width=5,outline="lime"))
+            self.after(100, lambda t= shape_tag :self.canvas.itemconfig(t,width=5,outline="blue"))
             self.after(500, lambda t= shape_tag :self.canvas.itemconfig(t,width=2,outline="black"))
         self.play_sound2()
 
@@ -120,6 +120,8 @@ class Counting_ui(ttk.Frame,inconvient_typing):
             
     def back_button(self):
         pygame.mixer.music.unpause()
+        self.valid_move.stop
+        self.notif_random.stop
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)
@@ -216,6 +218,11 @@ class Counting_ui(ttk.Frame,inconvient_typing):
             lbl.destroy()
         for lbl in self.labelcounts_Str:
             lbl.destroy()
+        for coin in self.coins:
+            shape_tag = coin + "_shape"
+            self.after(delay, lambda t= shape_tag :self.canvas.itemconfig(t,width=5,outline="lime"))
+            self.after(delay+100, lambda t= shape_tag :self.canvas.itemconfig(t,width=2,outline="black"))
+        
 
 
 
