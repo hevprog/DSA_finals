@@ -127,10 +127,17 @@ class InsertionUi(ttk.Frame, inconvient_typing):
     def animate(self):
         sortedValues = self.coin_values
 
+        self.label1.config(text="Randomized")
+
+        new_x_positions = self.coin_posx[:]
+        r.shuffle(new_x_positions)
+
         for i, coin in enumerate(self.sortedArr):
             tag = coin["coin"]
-            start_y = self.coin_pos_y
             key = sortedValues[i]
+            start_y = self.coin_posy[i]
+            new_x = new_x_positions[i]
+            self.canvas.itemconfig(tag+"_shape",width=2,outline="black")
             j = i - 1
             while j >= 0 and sortedValues[j] > key:
                 sortedValues[j + 1] = sortedValues[j];
