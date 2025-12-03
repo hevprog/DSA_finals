@@ -17,8 +17,8 @@ class Counting_ui(ttk.Frame,inconvient_typing):
         self.col = 'black'
         self.parent = parent
         
-        self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
-        self.notif_random = pygame.mixer.Sound('ui/sounds/wrong_move.wav')
+        self.valid_move = pygame.mixer.Sound('DSA_finals/ui/sounds/select.wav')
+        self.notif_random = pygame.mixer.Sound('DSA_finals/ui/sounds/wrong_move.wav')
         pygame.mixer.music.pause()
         
         
