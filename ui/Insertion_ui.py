@@ -18,7 +18,7 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         self.col = 'black'
         self.parent = parent
         
-        self.valid_move = pygame.mixer.Sound('DSA_finals/ui/sounds/select.wav')
+        self.valid_move = pygame.mixer.Sound('ui/sounds/select.wav')
         pygame.mixer.music.pause()
 
         ttk.Label(self, text="This is the Insertion sort").pack(pady = 10)
@@ -27,9 +27,7 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         ttk.Label(self, text= "Insertion Sort").pack(side="bottom")
         self.Label1 = ttk.Label(self)
         self.Label1.pack(pady=5, side="bottom")
-        ttk.Button(self,text="Shuffle", command=self.Shuffle).pack(side="bottom",pady= 20)
-        ttk.Button(self,text="random values", command=self.random_val).pack(side="bottom",pady= 5)
-        ttk.Button(self, text="Randomize", command=self.randomize_val).pack(side = "bottom", pady=20)
+        ttk.Button(self,text="Randomize", command=self.Shuffle).pack(side="bottom",pady= 20)
         self.canvas = ttk.Canvas(self, width=1000, height=500)
         self.canvas.pack(pady=5)
 
@@ -79,11 +77,32 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         self.d
         self.redraw()
 
-    def randomize_val(self):
+    def Shuffle(self):
+        
         self.Label1.config(text="Randomized")
-        r.shuffle(self.coin_values)
-        self.col = "black"
-        self.redraw()
+
+        new_x_positions = self.coin_pos_x[:]
+        r.shuffle(new_x_positions)
+
+        for i, coin in enumerate(self.sortedArr):
+            tag = coin["coin"]
+            start_y = self.coin_pos_y[i]
+            new_x = new_x_positions[i]
+            self.canvas.itemconfig(tag+"_shape",width=2,outline="black")
+            # pa up
+            self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: 
+                self.canvas.moveto(t, x,y - 50)
+            )
+
+            self.canvas.after(i * 300 + 150, lambda t=tag, x=new_x, y=start_y: 
+                self.canvas.moveto(t, x, y - 50)
+            )
+            self.canvas.after(i * 300 + 150,lambda:self.play_sound())
+           
+            self.canvas.after(i * 300 + 300, lambda t=tag, x=new_x, y=start_y: 
+                self.canvas.moveto(t, x, y)
+            )
+        self.play_sound()
     
     def back_button(self):
         pygame.mixer.music.unpause()

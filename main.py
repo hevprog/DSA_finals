@@ -42,7 +42,7 @@ class Main_window(ttk.Window,frame_ops):
         pygame.init()
         pygame.mixer.init()
 
-        pygame.mixer.music.load("DSA_finals/ui/sounds/main_background_music.mp3")
+        pygame.mixer.music.load("ui/sounds/main_background_music.mp3")
         pygame.mixer.music.set_volume(0.3)
 
         self.create_menu()
