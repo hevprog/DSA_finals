@@ -72,10 +72,7 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         insertionC.sort()
         self.col = "green"
         self.play_sound()
-        total_delay_step1 = self.animate_sort_step1()
         self.counts = ttk.Label(self, text="HIII").pack(pady=5)
-        self.display_countings()
-        self.canvas.after(total_delay_step1, self.animate_sort)
 
     def Shuffle(self):
         
@@ -126,89 +123,22 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         if done_callback:
             self.canvas.after(delay + 250, done_callback)
 
-    def animate_sort_step1(self):
-        sorted_vals = self.coin_values[:]
-        used = [0] * len(self.sortArr)
-        unique_vals = sorted(set(sorted_vals))
-        value_to_x = self.ordered_places[:]
-        value_stacks = {val: 0 for val in unique_vals}
-
-        delay = 0
-
-        for value in sorted_vals:
-            for i, coin in enumerate(self.sortArr):
-                tag = coin["coin"]
-                text_tag = tag + "_txt"
-                original_val = int(self.canvas.itemcget(text_tag, "text"))
-
-                if original_val == value and not used[i]:
-                    used[i] = True
-                    new_x = value_to_x[value]
-                    stack_count = value_stacks[value]
-                    new_y = 100 + stack_count * 30
-                    value_stacks[value] += 1
-
-                    self.moveDa_coin(tag, new_x, new_y, delay)
-                    delay += 200
-                    break
-
-        return delay + 500
 
     def animate(self):
-        delay = 0
-        coin_size = 50
-        gap = 20
-        x_start = 150
-        y_row = 100         
+        sortedValues = self.coin_values
 
-        for i in range(len(self.coin_values)):
-            key = self.coin_values[i]
+        for i, coin in enumerate(self.sortedArr):
+            tag = coin["coin"]
+            start_y = self.coin_pos_y
+            key = sortedValues[i]
             j = i - 1
-            while j >= 0 and self.arr[j] > key:
-                self.arr[j + 1] = self.arr[j];
+            while j >= 0 and sortedValues[j] > key:
+                sortedValues[j + 1] = sortedValues[j];
+                self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: 
+                self.canvas.moveto(t, x,y - 50)
+                )
                 j-=1
-            self.arr[j + 1] = key;
-
-
-    def animate_sort(self):
-        sorted_vals = self.coin_values[:]  # This is CountingC.get_array()
-        used = [0] * len(self.sortArr)
-        delay = 0
-        coin_size = 50
-        gap = 20
-        x_start = 150
-        y_row = 100  # final row for sorted coins
-
-        for position_index, value in enumerate(sorted_vals):
-            for i, coin in enumerate(self.sortArr):
-                tag = coin["coin"]
-                text_tag = tag + "_txt"
-                original_val = int(self.canvas.itemcget(text_tag, "text"))
-
-                if original_val > value and not used[i]:
-                    used[i] = True
-
-                    # Current position (stacked after step1)
-                    current_coords = self.canvas.coords(tag)
-                    current_x = current_coords[0] if len(current_coords) >= 2 else self.coin_posx[i]
-                    current_y = current_coords[1] if len(current_coords) >= 2 else self.coin_posy[i]
-
-                    # Target position according to sorted array
-                    new_x = x_start + position_index * (coin_size + gap)
-                    new_y = y_row
-
-                    self.moveDa_coin(tag, new_x, new_y, delay)
-                    delay += 200
-                    break
-    
-        for lbl in self.labelcounts:
-            lbl.destroy()
-        for lbl in self.labelcounts_Str:
-            lbl.destroy()
-        for coin in self.coins:
-            shape_tag = coin + "_shape"
-            self.after(delay, lambda t= shape_tag :self.canvas.itemconfig(t,width=5,outline="lime"))
-            self.after(delay+100, lambda t= shape_tag :self.canvas.itemconfig(t,width=2,outline="black"))
+            sortedValues[j + 1] = key;
 
 def play_sound(self,n=0,ms=3000):
     self.valid_move.play(loops=n)
