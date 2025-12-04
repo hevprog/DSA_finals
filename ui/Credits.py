@@ -19,7 +19,7 @@ class credits(ttk.Frame):
 
         DSA = ttk.Label(self, text="Data Structure and Algorithms",font=('Verdana', font_size*2),style="warning")
         instructor = ttk.Label(self, text="Sir Ricky James Nuevas- DSA instructor",font=('Verdana', font_size))
-        back = ttk.Button(self,text="Back to menu",command=self.is_back_btn_pressed,style="danger")
+        back = ttk.Button(self,text="Back to menu",command=self.back_button,style="danger")
 
         
         title.pack(pady= self.label_pad)
@@ -34,7 +34,7 @@ class credits(ttk.Frame):
         
         bgframe.pack()
 
-    def is_back_btn_pressed(self):
+    def back_button(self):
         self.parent.unshow(self)
         main_menu = self.parent.get_frame()
         self.parent.show(main_menu)

@@ -10,7 +10,7 @@
 <hr>
 
 ### Checklist:
-- [ ] Main UI
+- [x] Main UI
 - [x] Tower of Hanoi
 - [x] Binary Search
 - [x] Counting Sort
@@ -22,9 +22,9 @@
 ### Notes
 
 All goods na it mga modules, Main UI nala it kaylangan ig polish tas an steps pag sort
-- [ ] An Menu na aada ha top mismo
+- [x] An Menu na aada ha top mismo
 - [ ] Igpa full-screen natanan?
-- [ ] Counting sort steps
+- [x] Counting sort steps
 - [ ] Insertion sort steps
 
 
