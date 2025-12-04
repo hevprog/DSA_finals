@@ -115,15 +115,20 @@ class InsertionUi(ttk.Frame):
     def animate(self):
         sortedValue = self.coin_values
         key = self.coin_values[1]
+        new_x_positions = self.coin_pos_x[:]
+        start_y = self.coin_pos_y[i]
+        new_x = new_x_positions[i]
 
         for i, coin in enumerate(self.coin_values):
             tag = coin["coin"]
-            key = self.coin_values[i]
-            j = i - 1
-            while j >= 0 and self.coin_values[j] > key:
-                self.coin_values[j + 1] = self.coin_values[j]
-                j -= 1
-            self.coin_values[j + 1] = key
+            for i in enumerate(self.coin_values):
+                key = self.coin_values[i]
+                j = i - 1
+                while(j >= 0 and self.coin_values[j] > key):
+                    self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: 
+                        self.canvas.moveto(t, x,y - 50)
+                )
+            
         
 def play_sound(self,n=0,ms=3000):
     self.valid_move.play(loops=n)
