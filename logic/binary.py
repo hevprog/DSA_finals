@@ -30,3 +30,4 @@ class BinarySearchLogic:
                 callback(mid, "right_red")
                 time.sleep(self.delay)
                 right = mid - 1
+        callback(mid, "Not_found")

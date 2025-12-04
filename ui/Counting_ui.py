@@ -104,19 +104,14 @@ class Counting_ui(ttk.Frame,inconvient_typing):
             start_y = self.coin_posy[i]
             new_x = new_x_positions[i]
             self.canvas.itemconfig(tag+"_shape",width=2,outline="black")
-            # pa up
-            self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: 
-                self.canvas.moveto(t, x,y - 50)
-            )
-
-            self.canvas.after(i * 300 + 150, lambda t=tag, x=new_x, y=start_y: 
-                self.canvas.moveto(t, x, y - 50)
-            )
+            # pa up btw, same logic la adi it moveDacoin()
+            # waray ko la gamiton an func kay, It existed before moveDacoin()
+            self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: self.canvas.moveto(t, x,y - 50))
+            # pa down
+            self.canvas.after(i * 300 + 150, lambda t=tag, x=new_x, y=start_y: self.canvas.moveto(t, x, y - 50))
             self.canvas.after(i * 300 + 150,lambda:self.play_sound(0))
            
-            self.canvas.after(i * 300 + 300, lambda t=tag, x=new_x, y=start_y: 
-                self.canvas.moveto(t, x, y)
-            )
+            self.canvas.after(i * 300 + 300, lambda t=tag, x=new_x, y=start_y: self.canvas.moveto(t, x, y))
         self.play_sound(1)
             
     def back_button(self):
@@ -148,7 +143,16 @@ class Counting_ui(ttk.Frame,inconvient_typing):
             self.labelcounts_Str.append(lbl_str)
         
     def moveDa_coin(self, tag, new_x, base_y, delay, done_callback=None):
-        
+        """
+        movaDa_coin is gin gamit para ma change an x and y it drawing tag ha canvas gamit it
+        ttk.canvas.moveto(). Gin teteleport lang adi
+
+        :param tag: amo adi an imo identifier para ma access an object and change an iya pos
+        :param new_x: ig papas adi ha ttk.canvas.moveto() para ma change an x value it tag
+        :param base_y: same liwat an new_x, ig papas sa ttk.canvas.moveto()
+        :param delay: timer para diri tigda la ma tapos tas diri makikitan an process
+        :param done_callback: ma call hin next function after an mga ttk.canvas.after()
+        """
         self.canvas.after(delay, lambda: self.canvas.moveto(tag, new_x, base_y - 40))
         self.canvas.after(delay + 200, lambda: self.canvas.moveto(tag, new_x, base_y))
         self.canvas.after(delay + 200, lambda: self.play_sound())
@@ -157,6 +161,11 @@ class Counting_ui(ttk.Frame,inconvient_typing):
 
 
     def animate_sort_step1(self):
+        """
+        animate_sort_step1 is gin gamit para ma visualize an pag counting (exclusive lang to sa counting sort)
+        na return hin delay para magamit ni ttk.canvas.after(..,self.animate_sort).
+        this is pala the modified version of animate_sort()
+        """
         sorted_vals = self.coin_values[:]
         used = [0] * len(self.sortArr)
         unique_vals = sorted(set(sorted_vals))
@@ -166,6 +175,7 @@ class Counting_ui(ttk.Frame,inconvient_typing):
         delay = 0
 
         for value in sorted_vals:
+            #ig access for every coins and access an ira pos
             for i, coin in enumerate(self.sortArr):
                 tag = coin["coin"]
                 text_tag = tag + "_txt"
@@ -182,10 +192,16 @@ class Counting_ui(ttk.Frame,inconvient_typing):
                     delay += 200
                     break
 
-        return delay + 500  # return total duration so we know when step1 ends
+        return delay + 500
 
     def animate_sort(self):
-        
+        """
+        animate_sort is a replacement from redraw(self). tbh na pa bulig nala ako kay an
+        documentation an ttk.canvas is very verbose para ko ma brute force.
+
+        it core functionality adi is an akon moveDacoin(). the rest of this code block is pag assign na 
+        it new positions and looping to each coin.
+        """
         sorted_vals = self.coin_values[:]  # This is CountingC.get_array()
         used = [0] * len(self.sortArr)
         delay = 0
@@ -202,19 +218,17 @@ class Counting_ui(ttk.Frame,inconvient_typing):
 
                 if original_val == value and not used[i]:
                     used[i] = True
-
-                    # Current position (stacked after step1)
                     current_coords = self.canvas.coords(tag)
-                    current_x = current_coords[0] if len(current_coords) >= 2 else self.coin_posx[i]
-                    current_y = current_coords[1] if len(current_coords) >= 2 else self.coin_posy[i]
-
-                    # Target position according to sorted array
+                    current_coords[0] if len(current_coords) >= 2 else self.coin_posx[i]
+                    current_coords[1] if len(current_coords) >= 2 else self.coin_posy[i]
                     new_x = x_start + position_index * (coin_size + gap)
                     new_y = y_row
 
                     self.moveDa_coin(tag, new_x, new_y, delay)
                     delay += 200
                     break
+        
+        #ig delete an baga table.(iya logic is exclusive la adi ha counting sort)
         for lbl in self.labelcounts:
             lbl.destroy()
         for lbl in self.labelcounts_Str:

@@ -93,13 +93,13 @@ class Main_window(ttk.Window,frame_ops):
             self.show(self.frame)
             self.current_frame = self.frame
 
+            pygame.mixer.music.unpause()
+
     def force_back(self):
         if hasattr(self, "current_frame") and self.current_frame != self.frame:
                 if hasattr(self.current_frame, "back_button"):
                     self.current_frame.back_button()
                 
-
-
     #accessors to the clickable widgets
     def is_clicked_ToH(self):
         return self.button1
