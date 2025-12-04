@@ -3,13 +3,7 @@ from logic.insertion import insertion
 import random as r
 import pygame
 
-class inconvient_typing:
-    def tkInt(a):
-        return ttk.IntVar(value=a)
-    def tkStr(a):
-        return ttk.StringVar(value=a)
-
-class InsertionUi(ttk.Frame, inconvient_typing):
+class InsertionUi(ttk.Frame):
     MIN = 0
     MAX = 9
 
@@ -35,12 +29,10 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         self.labelCountsStr = []
 
         self.sortedArr = []
-        self.key = []
         self.coins = ["c1","c2","c3","c4","c5","c6","c7","c8","c9","c10"]
         self.coin_values = [63, 22, 12, 23, 45, 34, 11, 23, 78, 99]
         self.coin_pos_x = []
         self.coin_pos_y = []
-        self.ordered_places = []
 
         x_start = 50
         y_pos = 100
@@ -108,12 +100,9 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         self.parent.show(main_menu)
         self.parent.current_shown_frame = main_menu
     
-
-                
                 
     def play_sound(self):
         self.valid_move.play()
-
 
     def moveDa_coin(self, tag, new_x, base_y, delay, done_callback=None):
         
@@ -123,30 +112,19 @@ class InsertionUi(ttk.Frame, inconvient_typing):
         if done_callback:
             self.canvas.after(delay + 250, done_callback)
 
-
     def animate(self):
-        sortedValues = self.coin_values
+        sortedValue = self.coin_values
+        key = self.coin_values[1]
 
-        self.label1.config(text="Randomized")
-
-        new_x_positions = self.coin_posx[:]
-        r.shuffle(new_x_positions)
-
-        for i, coin in enumerate(self.sortedArr):
+        for i, coin in enumerate(self.coin_values):
             tag = coin["coin"]
-            key = sortedValues[i]
-            start_y = self.coin_posy[i]
-            new_x = new_x_positions[i]
-            self.canvas.itemconfig(tag+"_shape",width=2,outline="black")
+            key = self.coin_values[i]
             j = i - 1
-            while j >= 0 and sortedValues[j] > key:
-                sortedValues[j + 1] = sortedValues[j];
-                self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: 
-                self.canvas.moveto(t, x,y - 50)
-                )
-                j-=1
-            sortedValues[j + 1] = key;
-
+            while j >= 0 and self.coin_values[j] > key:
+                self.coin_values[j + 1] = self.coin_values[j]
+                j -= 1
+            self.coin_values[j + 1] = key
+        
 def play_sound(self,n=0,ms=3000):
     self.valid_move.play(loops=n)
 def play_sound2(self,n=0,ms=3000):
