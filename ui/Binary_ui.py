@@ -24,7 +24,7 @@ class Binary_ui(ttk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        title = ttk.Label(self, text="Binary Search Visualizer")
+        title = ttk.Label(self, text="Binary Search Visualizer",font=("Helvetica", 10, "bold"))
         title.pack(pady=20)
         ttk.Button(self,text="back to menu",command=self.back_button).pack(pady=20)
         # Input field
@@ -34,7 +34,10 @@ class Binary_ui(ttk.Frame):
         ttk.Label(input_frame, text="Enter target value: ").pack(side="left", padx=5)
         ttk.Frame(self,width=1000,height=200).pack()
         self.target_entry = ttk.Entry(input_frame, width=10)
-        self.target_entry.pack(side="left")
+        self.target_entry.pack(side="left",pady=2)
+
+        self.search_res = ttk.Label(self,text="placeholder",font=("Helvetica", 16, "bold"))
+        self.search_res.pack(side="bottom")
 
         container = ttk.Frame(self)
         container.pack(pady=20)
@@ -50,6 +53,8 @@ class Binary_ui(ttk.Frame):
         start_btn.pack(pady=20)
 
     def ui_callback(self, index, state):
+        self.is_found = False
+        self.search_res.configure(text="Searching...")
         if state == "reset":
             for lbl in self.label_widgets:
                 if lbl.cget("bg") not in ("red", "green"):
@@ -62,6 +67,8 @@ class Binary_ui(ttk.Frame):
         elif state == "found":
             self.label_widgets[index].config(bg="green")
             self.found_fx.play()
+            self.is_found = True
+            self.search_res.configure(text="Search found")
 
         elif state == "left_red":
             for i in range(0, index + 1):
@@ -74,7 +81,10 @@ class Binary_ui(ttk.Frame):
                 self.label_widgets[i].config(bg="red")
               
             self.inva_move.play()          
-
+        
+        if state == "Not_found":
+            self.search_res.configure(text="Value not found")
+        
     def start_visualization(self):
 
         # Validate input
