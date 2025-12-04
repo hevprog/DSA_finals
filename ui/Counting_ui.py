@@ -103,19 +103,14 @@ class Counting_ui(ttk.Frame,inconvient_typing):
             start_y = self.coin_posy[i]
             new_x = new_x_positions[i]
             self.canvas.itemconfig(tag+"_shape",width=2,outline="black")
-            # pa up
-            self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: 
-                self.canvas.moveto(t, x,y - 50)
-            )
-
-            self.canvas.after(i * 300 + 150, lambda t=tag, x=new_x, y=start_y: 
-                self.canvas.moveto(t, x, y - 50)
-            )
+            # pa up btw, same logic la adi it moveDacoin()
+            # waray ko la gamiton an func kay, It existed before moveDacoin()
+            self.canvas.after(i * 300, lambda t=tag,x=self.canvas.winfo_width()//2, y=start_y: self.canvas.moveto(t, x,y - 50))
+            # pa down
+            self.canvas.after(i * 300 + 150, lambda t=tag, x=new_x, y=start_y: self.canvas.moveto(t, x, y - 50))
             self.canvas.after(i * 300 + 150,lambda:self.play_sound(0))
            
-            self.canvas.after(i * 300 + 300, lambda t=tag, x=new_x, y=start_y: 
-                self.canvas.moveto(t, x, y)
-            )
+            self.canvas.after(i * 300 + 300, lambda t=tag, x=new_x, y=start_y: self.canvas.moveto(t, x, y))
         self.play_sound(1)
             
     def back_button(self):
