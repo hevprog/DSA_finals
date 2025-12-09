@@ -1,6 +1,6 @@
 ## Final Project: An Interactive Simulator for Data Structures and Algorithms.
-#### 🎊This project was deemed completed and is now ready to be presented by Friday🎊
-#### do finalize your repo and make pushes before thursday, pull requests will be reviewed and merge.
+## 🎊This project was deemed completed and is now ready to be presented by Friday🎊
+## do finalize your repo and make pushes before thursday, pull requests will be reviewed and merge.
 ## Contributors:
 - Henry V Singzon
 - Kent Andrew Parejas
