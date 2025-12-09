@@ -41,7 +41,7 @@ class InsertionUi(ttk.Frame):
         self.coin_pos_x = []
         self.coin_pos_y = []
 
-        x_start = 50
+        x_start = 150
         y_pos = 100
         self.coin_size = 50
         gap = 20
