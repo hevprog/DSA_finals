@@ -1,5 +1,6 @@
 ## Final Project: An Interactive Simulator for Data Structures and Algorithms.
-
+#### 🎊This project was deemed completed and is now ready to be presented by Friday🎊
+#### do finalize your repo and make pushes before thursday, pull requests will be reviewed and merge.
 ## Contributors:
 - Henry V Singzon
 - Kent Andrew Parejas
@@ -25,7 +26,7 @@ All goods na it mga modules, Main UI nala it kaylangan ig polish tas an steps pa
 - [x] An Menu na aada ha top mismo
 - [ ] Igpa full-screen natanan?
 - [x] Counting sort steps
-- [ ] Insertion sort steps
+- [x] Insertion sort steps
 
 
 In your class ensure to provide a function that returns the "back" button ex. def back_button()
