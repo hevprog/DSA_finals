@@ -1,4 +1,4 @@
-import tkinter as tk
+
 import ttkbootstrap as ttk
 from logic.counting import counting
 import random as r
@@ -196,9 +196,7 @@ class Counting_ui(ttk.Frame,inconvient_typing):
 
     def animate_sort(self):
         """
-        animate_sort is a replacement from redraw(self). tbh na pa bulig nala ako kay an
-        documentation an ttk.canvas is very verbose para ko ma brute force.
-
+        animate_sort is a replacement from redraw(self).
         it core functionality adi is an akon moveDacoin(). the rest of this code block is pag assign na 
         it new positions and looping to each coin.
         """
@@ -208,7 +206,7 @@ class Counting_ui(ttk.Frame,inconvient_typing):
         coin_size = 50
         gap = 20
         x_start = 150
-        y_row = 100  # final row for sorted coins
+        y_row = 100 
 
         for position_index, value in enumerate(sorted_vals):
             for i, coin in enumerate(self.sortArr):
