@@ -150,7 +150,7 @@ def switchInsert(): #change to Insert UI
 
 def switchStacks(): #change to Stacks UI
     temp = window.create_window()
-    stack = stack_ui(temp)
+    stack = stack_ui(temp, switchHanoi, switchInsert, switchCounting, switchBinary)
     stack.pack(fill="both", expand=True)
 
 def showcredits(): #CREDITTSS
