@@ -7,14 +7,19 @@ from ttkbootstrap.constants import *
 from tkinter import messagebox
 
 
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from logic.stack import stack
+
 
 class stack_ui(ttk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, on_hanoi, on_counting, on_insertion, on_binary):
         super().__init__(parent)
         self.parent = parent
+        self.on_hanoi_switch = on_hanoi
+        self.on_counting_switch = on_counting
+        self.on_insertion_switch = on_insertion
+        self.on_binary_switch = on_binary
         
         pygame.mixer.music.unload()
         pygame.mixer.music.load("ui/sounds/Jeremih - oui (Official Audio).mp3")
@@ -23,9 +28,12 @@ class stack_ui(ttk.Frame):
 
         self.custom_style = ttk.Style()
         self.custom_style.configure('danger.TButton', font=('Verdana', 8))
+        self.menu_style = ttk.Style()
+        
         
         self.text_display = ttk.StringVar()
-        self.parent.attributes("-fullscreen", TRUE)
+        self.project_textDisplay = ttk.StringVar()
+        self.parent.attributes("-fullscreen", True)
         self.tower_height = 0
         self.tower_spacing = 00
         self.base_y = 730
@@ -43,15 +51,74 @@ class stack_ui(ttk.Frame):
         self.canvas.pack()
         
         
-        ttk.Button(self,bootstyle ="danger", text="⬅️", command=self.back_button).place(x = 15, y = 15)
-        ttk.Label(self, bootstyle="secondary", padding=90, text="STACK",font=("Arial Rounded MT Bold", 40, "bold")).place(relx=0.5, rely=0.1, anchor=CENTER)
         
+        ttk.Label(self, bootstyle="secondary", padding=90, text="STACK",font=("Arial Rounded MT Bold", 40, "bold")).place(relx=0.5, rely=0.15, anchor=CENTER)
+        
+        self.project_display()
         self.display()
         self.stack_bin()
         self.create_disk()
         self.buttonGroup()
-        self.disk_push()
-
+        self.top_menu()
+        
+    def top_menu(self):
+        
+        self.menu_style.configure('colorFrame.TFrame', background='#140224')
+        container = ttk.Frame(self, style='colorFrame.TFrame')
+        container.place(relx=0.5, rely=0, anchor='n', width=2000, height=45)
+        
+        title = ttk.Label(master=container, text="DSA FINALS (STACKS) - John Reymark Binghoy", bootstyle="light", font=("Times New Roman", 12, "bold"))
+        ttk.Button(master=container, bootstyle ="danger", text="❌", command=self.exit_full).place(relx=0.965, rely=0.5, anchor='center')
+        title.place(relx=0.5, rely=0.5, anchor=CENTER)
+        menu = ttk.Menubutton(
+                            master=container,
+                            bootstyle="info-outline",
+                            text="MENU"
+                            )
+        menu.place(relx=0.08, rely=0.5, anchor='center')
+        options_menu = ttk.Menu(menu) 
+        options_menu.add_radiobutton(label="Tower of Hanoi", command=self.switch_toHanoi)
+        options_menu.add_radiobutton(label="Counting Sort", command=self.switch_toCounting)
+        options_menu.add_radiobutton(label="Insertion sort", command=self.switch_toInsertion )
+        options_menu.add_radiobutton(label="Binary Search", command=self.switch_toBinary)
+        options_menu.add_radiobutton(label="Exit", command=sys.exit)
+        menu["menu"] = options_menu
+        
+        project = ttk.Menubutton(
+                            master=container,
+                            bootstyle="info-outline",
+                            text="PROJECT"
+                            )
+        project.place(relx=0.12, rely=0.5, anchor='center')
+        project_menu = ttk.Menu(project)
+        project_menu.add_radiobutton(label="Contributors", command=self.contributors)
+        project_menu.add_radiobutton(label="About", command=self.about)
+        project_menu.add_radiobutton(label="Clear", command=self.clear)
+        project["menu"] = project_menu
+        
+        ttk.Button(master=container,bootstyle ="danger", text="⬅️", command=self.back_button).place(relx=0.04, rely=0.5, anchor='center')
+        
+    def contributors(self):
+        self.project_textDisplay.set("Henry V Singzon\nKent Andrew Parejas\nMichael Andre Pacheco\nNico Timothy Babaylan\nJohn Reymark Binghoy" )
+    
+    def about(self):
+        self.project_textDisplay.set("Data Structures and Algorithms \nSimulator\n\nDSA FINALS\nIn compliance to Sir Ricky Nuevas\n\nFor the subject\nData Strucutres and Algorithms")
+            
+    def clear(self):
+        self.project_textDisplay.set("")
+        
+    def project_display(self):
+        container = ttk.Frame(master=self, padding=2)
+        container.place(relx=0.78, rely=0.5, anchor=CENTER)
+        display = ttk.Label(
+            master=container,
+            font=("Verdana", 20, "bold"),
+            justify=CENTER,
+            textvariable=self.project_textDisplay,
+            anchor=E,
+        )
+        display.pack(fill=X)
+        
     def pop_SEffect(self):
         sound_effect = pygame.mixer.Sound("ui/sounds/scream cut.mp3")
         sound_effect.play()
@@ -114,7 +181,6 @@ class stack_ui(ttk.Frame):
                     
     def buttonPress(self, txt):
         if txt == "PUSH":
-            self.push_SEffects()
             self.disk_push()
         elif txt == "POP":
             self.disk_pop()
@@ -154,6 +220,7 @@ class stack_ui(ttk.Frame):
             self.text_display.set("STACK IS FULL")
             self.canvas.after(3000, lambda: self.text_display.set(""))
             return 
+        self.push_SEffects()
         i = len(self.disks) 
         disk_width = self.disk_width
         x = self.tower_positions
@@ -188,7 +255,7 @@ class stack_ui(ttk.Frame):
         length = (f"Size: {len(self.disks)}")
         self.text_display.set(length)
         self.canvas.after(3000, lambda: self.text_display.set(""))
-        
+        8
     def isEmpty(self):
         if len(self.disks) > 0:
             check = ("FALSE")
@@ -198,7 +265,7 @@ class stack_ui(ttk.Frame):
         self.canvas.after(3000, lambda: self.text_display.set(""))
         
     def dialog(self):
-        confirmation = messagebox.askyesno(title="WARNING!", message="You are about to terminate the program\n\nCONTINUE?")
+        confirmation = messagebox.askyesno(title="WARNING!", message="You are about to terminate the program\n\nCONTINUE?" )
         if confirmation == TRUE:
             sys.exit()
 
@@ -237,13 +304,29 @@ class stack_ui(ttk.Frame):
         pygame.mixer.music.set_volume(0.5)
         self.parent.destroy()
         
-       
+    def switch_toHanoi(self):
+        self.custom_style.configure('danger.TButton', font=('Arial', 15))
+        self.on_hanoi_switch()
+        self.parent.destroy()
+    
+    def switch_toBinary(self):
+        self.custom_style.configure('danger.TButton', font=('Arial', 15))
+        self.on_binary_switch()
+        self.parent.destroy()
+        
+    def switch_toCounting(self):
+        self.custom_style.configure('danger.TButton', font=('Arial', 15))
+        self.on_counting_switch()
+        self.parent.destroy()
+        
+    def switch_toInsertion(self):
+        self.custom_style.configure('danger.TButton', font=('Arial', 15))
+        self.on_insertion_switch()
+        self.parent.destroy()
         
         
-        
-        
-    def exit_full(self, event):
-        window.attributes("-fullscreen", False)
+    def exit_full(self):
+        self.parent.attributes("-fullscreen", False)
         
         
 if __name__ == "__main__":
