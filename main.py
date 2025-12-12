@@ -1,4 +1,3 @@
-
 import ttkbootstrap as ttk
 import pygame
 from ui.ToH_ui import Hanoi_ui
