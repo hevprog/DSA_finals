@@ -36,7 +36,7 @@ class Binary_ui(ttk.Frame):
         self.target_entry = ttk.Entry(input_frame, width=10)
         self.target_entry.pack(side="left",pady=2)
 
-        self.search_res = ttk.Label(self,text="placeholder",font=("Helvetica", 16, "bold"))
+        self.search_res = ttk.Label(self,text="",font=("Helvetica", 16, "bold"))
         self.search_res.pack(side="bottom")
 
         container = ttk.Frame(self)
